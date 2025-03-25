@@ -1,13 +1,39 @@
+import styled from "styled-components";
+import { colors } from "./styling/Variables";
 import imgEmptyCart from "./assets/icons/illustration-empty-cart.svg";
 
-function Cart() {
+const Panel = styled.div`
+    background-color: ${colors.panelBackground};
+    box-shadow: ${colors.panelShadow} 0px 5px 10px;
+    border-radius: 12px;
+    margin-top: 30px;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+`;
+
+const Heading = styled.h3`
+    color: ${colors.primary};
+    margin: 0 0 40px;
+    font-size: 1.5rem;
+`;
+
+const Image = styled.img`
+    align-self: center;
+`;
+
+const Description = styled.p`
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+`;
+
+export default function Cart({ count = 0 }) {
     return (
-        <div>
-            <h3>Your Cart</h3>
-            <img src={imgEmptyCart} alt="" aria-hidden />
-            <p>Your added items will appear here.</p>
-        </div>
+        <Panel>
+            <Heading>Your Cart ({count})</Heading>
+            <Image src={imgEmptyCart} alt="" aria-hidden />
+            <Description>Your added items will appear here.</Description>
+        </Panel>
     );
 }
-
-export default Cart;
