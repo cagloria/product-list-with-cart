@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import iconAddCart from "./assets/icons/icon-add-to-cart.svg";
-import { colors } from "./styling/Variables";
+import iconAddCart from "../assets/icons/icon-add-to-cart.svg";
+import Button from "./Button";
+import { colors } from "../styling/Variables";
 
 const ItemComponent = styled.li`
     list-style: none;
     display: flex;
     flex-direction: column;
+    position: relative;
 `;
 
 const ItemImage = styled.img`
@@ -15,9 +17,9 @@ const ItemImage = styled.img`
 `;
 
 const CategoryName = styled.p`
-    color: ${colors.categoryText};
+    color: ${colors.rose500};
     font-size: 0.875rem;
-    margin: -5px 0 4px;
+    margin: 40px 0 4px;
     order: 3;
 `;
 
@@ -34,21 +36,11 @@ const Price = styled.p`
     order: 5;
 `;
 
-const CartButton = styled.button`
+const CartButton = styled(Button)`
     order: 2;
-    position: relative;
-    bottom: 22px;
-    width: fit-content;
+    position: absolute;
+    top: 190px;
     align-self: center;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 11px 26px;
-    background-color: ${colors.panelBackground};
-    border: 1px solid hsl(12, 20%, 44%);
-    border-radius: 60px;
-    font-size: 14px;
-    font-weight: 600;
 `;
 
 export default function Item({ name, category, price, imageObject }) {
@@ -70,10 +62,7 @@ export default function Item({ name, category, price, imageObject }) {
             <CategoryName>{category}</CategoryName>
             <ItemName>{name}</ItemName>
             <Price>{price}</Price>
-            <CartButton>
-                <img src={iconAddCart} alt="" aria-hidden />
-                Add to Cart
-            </CartButton>
+            <CartButton iconImg={iconAddCart} text="Add to Cart" />
         </ItemComponent>
     );
 }

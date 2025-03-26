@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { colors } from "./styling/Variables";
-import imgEmptyCart from "./assets/icons/illustration-empty-cart.svg";
+import { colors } from "../styling/Variables";
+import imgEmptyCart from "../assets/icons/illustration-empty-cart.svg";
 
 const Panel = styled.div`
-    background-color: ${colors.panelBackground};
-    box-shadow: ${colors.panelShadow} 0px 5px 10px;
+    background-color: ${colors.rose50};
+    box-shadow: ${colors.rose100} 0px 8px 20px 8px;
     border-radius: 12px;
     margin-top: 30px;
     padding: 26px 24px;

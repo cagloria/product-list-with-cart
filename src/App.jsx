@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { GlobalStyle } from "./styling/Theme";
 import data from "./data/data.json";
-import Item from "./Item";
-import Cart from "./Cart";
+import Item from "./components/Item";
+import Cart from "./components/Cart";
 
 const Section = styled.section`
     padding: 0 24px 27px;

@@ -4,7 +4,7 @@ import { colors } from "./Variables";
 export const GlobalStyle = createGlobalStyle`
     * {
         font-family: "Red Hat Text", sans-serif;
-        color: ${colors.bodyText};
+        color: ${colors.rose900};
     }
     
     html, body {
@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background-color: ${colors.background};
+        background-color: ${colors.rose50};
     }
 
     h2 {
