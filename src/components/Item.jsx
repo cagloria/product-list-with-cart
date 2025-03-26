@@ -5,42 +5,40 @@ import { colors } from "../styling/Variables";
 
 const ItemComponent = styled.li`
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    display: grid;
 `;
 
 const ItemImage = styled.img`
     border-radius: 8px;
     width: 100%;
-    order: 1;
+    grid-row: 1 / 2;
 `;
 
 const CategoryName = styled.p`
     color: ${colors.rose500};
     font-size: 0.875rem;
-    margin: 40px 0 4px;
-    order: 3;
+    margin: -5px 0 4px;
+    grid-row: 3 / 4;
 `;
 
 const ItemName = styled.p`
     font-weight: 600;
     margin: 0px 0;
-    order: 4;
+    grid-row: 4 / 5;
 `;
 
 const Price = styled.p`
     color: ${colors.primary};
     font-weight: 600;
     margin: 4px 0;
-    order: 5;
+    grid-row: 5 / 6;
 `;
 
 const CartButton = styled(Button)`
-    order: 2;
-    position: absolute;
-    top: 190px;
-    align-self: center;
+    position: relative;
+    bottom: 22px;
+    justify-self: center;
+    grid-row: 2 / 3;
 `;
 
 export default function Item({ name, category, price, imageObject }) {
