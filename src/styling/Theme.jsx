@@ -15,8 +15,7 @@ export const GlobalStyle = createGlobalStyle`
         background-color: ${colors.rose50};
     }
 
-    h2 {
-        margin: 1.3125rem 0 1.875rem;
+    h1 {
         font-size: 2.5rem;
     }
 `;

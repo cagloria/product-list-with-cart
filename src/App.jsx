@@ -5,16 +5,56 @@ import Item from "./components/Item";
 import Cart from "./components/Cart";
 
 const Section = styled.section`
-    padding: 0 24px 27px;
+    padding: 21px 6.4vw 27px;
+    max-width: 1440px;
+    box-sizing: border-box;
     margin: 0 auto;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: auto;
+    grid-auto-rows: auto;
+    grid-template-areas: "h" "i" "c";
+
+    @media screen and (min-width: 1024px) {
+        display: grid;
+        grid-template-columns: minmax(auto, 800px) auto;
+        grid-template-areas: "h c" "i c" "i c";
+        padding-top: 86px;
+        padding-left: 7.8vw;
+        padding-right: 7.8vw;
+    }
+`;
+
+const Heading = styled.h1`
+    grid-area: h;
+    margin: 0;
 `;
 
 const ItemsList = styled.ul`
+    grid-area: i;
     padding-left: 0;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 20px;
+    grid-auto-columns: auto;
     margin-top: 0;
+    max-width: 1000px;
+
+    @media screen and (min-width: 600px) {
+        grid-template-columns: repeat(2, auto);
+    }
+
+    @media screen and (min-width: 1024px) {
+        grid-template-columns: repeat(3, auto);
+    }
+`;
+
+const CartPanel = styled(Cart)`
+    grid-area: c;
+
+    @media screen and (min-width: 1024px) {
+        margin-top: 0;
+        height: fit-content;
+    }
 `;
 
 export default function App() {
@@ -32,9 +72,9 @@ export default function App() {
         <>
             <GlobalStyle />
             <Section>
-                <h2>Desserts</h2>
+                <Heading>Desserts</Heading>
                 <ItemsList>{listItems}</ItemsList>
-                <Cart />
+                <CartPanel />
             </Section>
         </>
     );
