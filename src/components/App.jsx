@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { GlobalStyle } from "./styling/Theme";
-import data from "./data/data.json";
-import Item from "./components/Item";
-import Cart from "./components/Cart";
+import { GlobalStyle } from "../styling/Theme";
+import data from "../data/data.json";
+import Item from "./Item";
+import Cart from "./Cart";
 
 const Section = styled.section`
     padding: 21px 6.4vw 27px;
@@ -71,11 +71,13 @@ export default function App() {
     return (
         <>
             <GlobalStyle />
-            <Section>
-                <Heading>Desserts</Heading>
-                <ItemsList>{listItems}</ItemsList>
-                <CartPanel />
-            </Section>
+            <main>
+                <Section>
+                    <Heading>Desserts</Heading>
+                    <ItemsList>{listItems}</ItemsList>
+                    <CartPanel />
+                </Section>
+            </main>
         </>
     );
 }

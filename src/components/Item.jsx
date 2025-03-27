@@ -1,11 +1,18 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import iconAddCart from "../assets/icons/icon-add-to-cart.svg";
-import Button from "./Button";
 import { colors } from "../styling/Variables";
 
 const ItemComponent = styled.li`
     list-style: none;
     display: grid;
+
+    button {
+        position: relative;
+        bottom: 22px;
+        justify-self: center;
+        grid-row: 2 / 3;
+    }
 `;
 
 const ItemImage = styled.img`
@@ -34,14 +41,14 @@ const Price = styled.p`
     grid-row: 5 / 6;
 `;
 
-const CartButton = styled(Button)`
-    position: relative;
-    bottom: 22px;
-    justify-self: center;
-    grid-row: 2 / 3;
-`;
-
 export default function Item({ name, category, price, imageObject }) {
+    const [quantity, setQuantity] = useState(0);
+
+    function handleQuantityChange() {
+        console.log("changed");
+        setQuantity(quantity + 1);
+    }
+
     const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
 
     price = Intl.NumberFormat("en-US", {
@@ -53,14 +60,17 @@ export default function Item({ name, category, price, imageObject }) {
         <ItemComponent>
             <ItemImage
                 srcSet={sourceSet}
-                sizes="(min-width: 1024px) 502px, (min-width: 375px) 427px, 654px"
+                sizes="(min-width: 600px) 427px, (min-width: 1024px) 502px, 654px"
                 src={imageObject.mobile}
                 alt={name}
             />
             <CategoryName>{category}</CategoryName>
             <ItemName>{name}</ItemName>
             <Price>{price}</Price>
-            <CartButton iconImg={iconAddCart} text="Add to Cart" />
+            <button onClick={handleQuantityChange}>
+                <img src={iconAddCart} alt="" aria-hidden />
+                Add to Cart
+            </button>
         </ItemComponent>
     );
 }
