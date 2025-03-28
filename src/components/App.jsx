@@ -59,8 +59,7 @@ const CartPanel = styled(Cart)`
 `;
 
 export default function App() {
-    const [cart, setCart] = useState([]);
-    const [cartQuantity, setCartQuantity] = useState(0);
+    const [cart, setCart] = useState({ cartQuantity: 0, items: [] });
 
     const listItems = data.map((item) => (
         <Item
@@ -73,11 +72,24 @@ export default function App() {
         />
     ));
 
-    function updateCart(itemName, itemQuantity) {
-        let newCart = cart;
-        newCart.push({ name: itemName, quantity: itemQuantity });
-        setCart(newCart);
-        setCartQuantity(newCart.length);
+    function updateCart(itemName, quantityAdded) {
+        let cartArr = cart.items;
+
+        let index = cartArr.findIndex((item) => item.name === itemName);
+
+        if (index > -1) {
+            cartArr[index].quantity += quantityAdded;
+        } else {
+            cartArr.push({
+                name: itemName,
+                quantity: 1,
+            });
+        }
+
+        setCart({
+            cartQuantity: cart.cartQuantity + quantityAdded,
+            items: cartArr,
+        });
     }
 
     return (
@@ -87,7 +99,7 @@ export default function App() {
                 <Section>
                     <Heading>Desserts</Heading>
                     <ItemsList>{listItems}</ItemsList>
-                    <CartPanel cart={cart} totalQuantity={cartQuantity} />
+                    <CartPanel cart={cart} totalQuantity={cart.cartQuantity} />
                 </Section>
             </main>
         </>

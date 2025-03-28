@@ -48,7 +48,6 @@ export default function Item({
     imageObject,
     handleCart,
 }) {
-    const [quantity, setQuantity] = useState(0);
     const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
 
     price = Intl.NumberFormat("en-US", {
@@ -56,10 +55,12 @@ export default function Item({
         currency: "USD",
     }).format(price);
 
-    function addItem(newQuantity) {
-        setQuantity(newQuantity);
-        handleCart(name, newQuantity);
+    function addItem() {
+        handleCart(name, 1);
     }
+
+    // TODO: Pass state of item from App to Item
+    // TODO: Handle removing items
 
     return (
         <ItemComponent>
@@ -72,7 +73,7 @@ export default function Item({
             <CategoryName>{category}</CategoryName>
             <ItemName>{name}</ItemName>
             <Price>{price}</Price>
-            <button onClick={() => addItem(quantity + 1)}>
+            <button onClick={addItem}>
                 <img src={iconAddCart} alt="" aria-hidden />
                 Add to Cart
             </button>
