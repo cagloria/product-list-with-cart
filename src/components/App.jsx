@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import { GlobalStyle } from "../styling/Theme";
 import data from "../data/data.json";
@@ -58,6 +59,9 @@ const CartPanel = styled(Cart)`
 `;
 
 export default function App() {
+    const [cart, setCart] = useState([]);
+    const [cartQuantity, setCartQuantity] = useState(0);
+
     const listItems = data.map((item) => (
         <Item
             key={item.name}
@@ -65,8 +69,16 @@ export default function App() {
             category={item.category}
             price={item.price}
             imageObject={item.image}
+            handleCart={updateCart}
         />
     ));
+
+    function updateCart(itemName, itemQuantity) {
+        let newCart = cart;
+        newCart.push({ name: itemName, quantity: itemQuantity });
+        setCart(newCart);
+        setCartQuantity(newCart.length);
+    }
 
     return (
         <>
@@ -75,7 +87,7 @@ export default function App() {
                 <Section>
                     <Heading>Desserts</Heading>
                     <ItemsList>{listItems}</ItemsList>
-                    <CartPanel />
+                    <CartPanel cart={cart} totalQuantity={cartQuantity} />
                 </Section>
             </main>
         </>

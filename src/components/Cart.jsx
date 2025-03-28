@@ -27,12 +27,20 @@ const Description = styled.p`
     font-size: 14px;
 `;
 
-export default function Cart({ count = 0, className }) {
+export default function Cart({ className, totalQuantity }) {
     return (
         <Panel className={className}>
-            <Heading>Your Cart ({count})</Heading>
-            <Image src={imgEmptyCart} alt="" aria-hidden />
-            <Description>Your added items will appear here.</Description>
+            <Heading>Your Cart ({totalQuantity})</Heading>
+            {totalQuantity <= 0 ? (
+                <>
+                    <Image src={imgEmptyCart} alt="" aria-hidden />
+                    <Description>
+                        Your added items will appear here.
+                    </Description>
+                </>
+            ) : (
+                <p>Items in cart.</p>
+            )}
         </Panel>
     );
 }

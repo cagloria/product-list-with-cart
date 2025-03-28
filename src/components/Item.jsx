@@ -41,20 +41,25 @@ const Price = styled.p`
     grid-row: 5 / 6;
 `;
 
-export default function Item({ name, category, price, imageObject }) {
+export default function Item({
+    name,
+    category,
+    price,
+    imageObject,
+    handleCart,
+}) {
     const [quantity, setQuantity] = useState(0);
-
-    function handleQuantityChange() {
-        console.log("changed");
-        setQuantity(quantity + 1);
-    }
-
     const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
 
     price = Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
     }).format(price);
+
+    function addItem(newQuantity) {
+        setQuantity(newQuantity);
+        handleCart(name, newQuantity);
+    }
 
     return (
         <ItemComponent>
@@ -67,7 +72,7 @@ export default function Item({ name, category, price, imageObject }) {
             <CategoryName>{category}</CategoryName>
             <ItemName>{name}</ItemName>
             <Price>{price}</Price>
-            <button onClick={handleQuantityChange}>
+            <button onClick={() => addItem(quantity + 1)}>
                 <img src={iconAddCart} alt="" aria-hidden />
                 Add to Cart
             </button>
