@@ -68,7 +68,6 @@ export default function App() {
             (element) => element.name === item.name
         );
         const itemObj = itemsArr[index];
-        console.log({ itemObj });
 
         return (
             <Item
@@ -77,7 +76,7 @@ export default function App() {
                 category={item.category}
                 price={item.price}
                 imageObject={item.image}
-                handleCart={handleAddItem}
+                onQuantityChange={handleItemQuantityChange}
                 quantity={itemObj.quantity ?? 0}
             />
         );
@@ -85,19 +84,18 @@ export default function App() {
 
     // TODO: Change to handle quantity change
 
-    function handleAddItem(itemName) {
+    function handleItemQuantityChange(itemName, quantityChange) {
         let newCartArr = cart.items;
         let index = newCartArr.findIndex((item) => item.name === itemName);
 
         if (newCartArr[index].quantity) {
-            newCartArr[index].quantity++;
+            newCartArr[index].quantity += quantityChange;
         } else {
             newCartArr[index].quantity = 1;
         }
-        console.log(newCartArr[index].quantity);
 
         setCart({
-            cartQuantity: cart.cartQuantity + 1,
+            cartQuantity: (cart.cartQuantity += quantityChange),
             items: newCartArr,
         });
     }

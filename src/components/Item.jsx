@@ -46,7 +46,7 @@ export default function Item({
     category,
     price,
     imageObject,
-    handleCart,
+    onQuantityChange,
     quantity = 0,
 }) {
     const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
@@ -57,7 +57,13 @@ export default function Item({
     }).format(price);
 
     function addItem() {
-        handleCart(name);
+        onQuantityChange(name, 1);
+    }
+
+    function removeItem() {
+        if (quantity > 0) {
+            onQuantityChange(name, -1);
+        }
     }
 
     // TODO: Pass state of item from App to Item
