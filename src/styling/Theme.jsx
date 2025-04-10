@@ -21,7 +21,6 @@ export const GlobalStyle = createGlobalStyle`
 
     button {
         width: fit-content;
-        min-height: 43px;
         display: flex;
         background-color: ${colors.rose50};
         color: ${colors.rose900};
@@ -30,7 +29,7 @@ export const GlobalStyle = createGlobalStyle`
         padding: 11px 26px;
         border: 1px solid ${colors.rose500};
         border-radius: 60px;
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: 600;
         transition: 0.2s ease border-color, 0.2s ease color;
 

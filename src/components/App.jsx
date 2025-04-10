@@ -17,8 +17,8 @@ const Section = styled.section`
     grid-template-areas: "h" "i" "c";
 
     @media screen and (min-width: 1024px) {
-        display: grid;
-        grid-template-columns: minmax(auto, 800px) auto;
+        /* FIXME: Adjust sizing to give room to cart */
+        grid-template-columns: minmax(1fr, 800px) auto;
         grid-template-areas: "h c" "i c" "i c";
         padding-top: 86px;
         padding-left: 7.8vw;
@@ -35,17 +35,18 @@ const ItemsList = styled.ul`
     grid-area: i;
     padding-left: 0;
     display: grid;
+    align-items: start;
     gap: 20px;
-    grid-auto-columns: auto;
+    grid-auto-columns: 1fr;
     margin-top: 0;
     max-width: 1000px;
 
     @media screen and (min-width: 600px) {
-        grid-template-columns: repeat(2, auto);
+        grid-template-columns: repeat(2, 1fr);
     }
 
     @media screen and (min-width: 1024px) {
-        grid-template-columns: repeat(3, auto);
+        grid-template-columns: repeat(3, 1fr);
     }
 `;
 
@@ -81,8 +82,6 @@ export default function App() {
             />
         );
     });
-
-    // TODO: Change to handle quantity change
 
     function handleItemQuantityChange(itemName, quantityChange) {
         let newCartArr = cart.items;
