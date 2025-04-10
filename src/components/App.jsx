@@ -59,36 +59,46 @@ const CartPanel = styled(Cart)`
 `;
 
 export default function App() {
-    const [cart, setCart] = useState({ cartQuantity: 0, items: [] });
+    const [cart, setCart] = useState({ cartQuantity: 0, items: data });
 
-    const listItems = data.map((item) => (
-        <Item
-            key={item.name}
-            name={item.name}
-            category={item.category}
-            price={item.price}
-            imageObject={item.image}
-            handleCart={updateCart}
-        />
-    ));
+    const listItems = cart.items.map((item) => {
+        const itemsArr = cart.items;
 
-    function updateCart(itemName, quantityAdded) {
-        let cartArr = cart.items;
+        const index = itemsArr.findIndex(
+            (element) => element.name === item.name
+        );
+        const itemObj = itemsArr[index];
+        console.log({ itemObj });
 
-        let index = cartArr.findIndex((item) => item.name === itemName);
+        return (
+            <Item
+                key={item.name}
+                name={item.name}
+                category={item.category}
+                price={item.price}
+                imageObject={item.image}
+                handleCart={handleAddItem}
+                quantity={itemObj.quantity ?? 0}
+            />
+        );
+    });
 
-        if (index > -1) {
-            cartArr[index].quantity += quantityAdded;
+    // TODO: Change to handle quantity change
+
+    function handleAddItem(itemName) {
+        let newCartArr = cart.items;
+        let index = newCartArr.findIndex((item) => item.name === itemName);
+
+        if (newCartArr[index].quantity) {
+            newCartArr[index].quantity++;
         } else {
-            cartArr.push({
-                name: itemName,
-                quantity: 1,
-            });
+            newCartArr[index].quantity = 1;
         }
+        console.log(newCartArr[index].quantity);
 
         setCart({
-            cartQuantity: cart.cartQuantity + quantityAdded,
-            items: cartArr,
+            cartQuantity: cart.cartQuantity + 1,
+            items: newCartArr,
         });
     }
 
@@ -98,7 +108,7 @@ export default function App() {
             <main>
                 <Section>
                     <Heading>Desserts</Heading>
-                    <ItemsList>{listItems}</ItemsList>
+                    <ItemsList>{listItems ?? "Loading items..."}</ItemsList>
                     <CartPanel cart={cart} totalQuantity={cart.cartQuantity} />
                 </Section>
             </main>

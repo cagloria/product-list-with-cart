@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import iconAddCart from "../assets/icons/icon-add-to-cart.svg";
 import { colors } from "../styling/Variables";
@@ -47,6 +47,7 @@ export default function Item({
     price,
     imageObject,
     handleCart,
+    quantity = 0,
 }) {
     const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
 
@@ -56,7 +57,7 @@ export default function Item({
     }).format(price);
 
     function addItem() {
-        handleCart(name, 1);
+        handleCart(name);
     }
 
     // TODO: Pass state of item from App to Item
