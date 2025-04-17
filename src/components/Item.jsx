@@ -66,6 +66,7 @@ const CartContainer = styled.div`
 
 const AddToCartButton = styled.button`
     width: 100%;
+    box-sizing: border-box;
 `;
 
 const IncrementDecrementButton = styled.button`
@@ -119,6 +120,7 @@ export default function Item({
 
     return (
         <ItemComponent>
+            {/* FIXME: Fix responsive image source set */}
             <ItemImage
                 srcSet={sourceSet}
                 sizes="(min-width: 600px) 427px, (min-width: 1024px) 502px, 654px"

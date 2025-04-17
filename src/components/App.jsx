@@ -17,8 +17,7 @@ const Section = styled.section`
     grid-template-areas: "h" "i" "c";
 
     @media screen and (min-width: 1024px) {
-        /* FIXME: Adjust sizing to give room to cart */
-        grid-template-columns: minmax(1fr, 800px) auto;
+        grid-template-columns: 1fr minmax(380px, auto);
         grid-template-areas: "h c" "i c" "i c";
         padding-top: 86px;
         padding-left: 7.8vw;
@@ -45,7 +44,7 @@ const ItemsList = styled.ul`
         grid-template-columns: repeat(2, 1fr);
     }
 
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: 1440px) {
         grid-template-columns: repeat(3, 1fr);
     }
 `;
