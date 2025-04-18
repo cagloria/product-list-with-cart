@@ -4,6 +4,7 @@ import iconAddCart from "../assets/icons/icon-add-to-cart.svg";
 import { colors } from "../styling/Variables";
 import iconDecrement from "../assets/icons/icon-decrement-quantity.svg";
 import iconIncrement from "../assets/icons/icon-increment-quantity.svg";
+import { convertToUSD } from "../utility/utility";
 
 const ItemComponent = styled.li`
     list-style: none;
@@ -39,7 +40,7 @@ const Price = styled.p`
 
 // FIXME: Having quantity > 0 shifts content up
 // TODO: Animation to distinguish Add to Cart and increment/decrement
-const CartContainer = styled.div`
+const CartQuantityContainer = styled.div`
     grid-row: 2 / 3;
     position: relative;
     bottom: 22px;
@@ -103,10 +104,7 @@ export default function Item({
 }) {
     const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
 
-    price = Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-    }).format(price);
+    price = convertToUSD(price);
 
     function addItem() {
         onQuantityChange(name, 1);
@@ -130,7 +128,7 @@ export default function Item({
             <CategoryName>{category}</CategoryName>
             <ItemName>{name}</ItemName>
             <Price>{price}</Price>
-            <CartContainer>
+            <CartQuantityContainer>
                 {quantity < 1 ? (
                     <AddToCartButton onClick={addItem}>
                         <img src={iconAddCart} alt="" aria-hidden />
@@ -147,7 +145,7 @@ export default function Item({
                         </IncrementDecrementButton>
                     </>
                 )}
-            </CartContainer>
+            </CartQuantityContainer>
         </ItemComponent>
     );
 }

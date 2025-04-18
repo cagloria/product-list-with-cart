@@ -3,6 +3,7 @@ export const colors = {
     primaryDark: "hsl(13, 88%, 24%)",
     secondary: "hsl(159, 69%, 38%)",
     rose50: "hsl(20, 50%, 98%)",
+    rose75: "hsl(20, 50%, 96%)",
     rose100: "hsl(13, 31%, 94%)",
     rose200: "hsl(13, 28%, 80%)",
     rose300: "hsl(14, 25%, 72%)",

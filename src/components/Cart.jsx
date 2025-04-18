@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { colors } from "../styling/Variables";
 import imgEmptyCart from "../assets/icons/illustration-empty-cart.svg";
+import iconCarbonNeutral from "../assets/icons/icon-carbon-neutral.svg";
+import { convertToUSD } from "../utility/utility";
 
 const Panel = styled.div`
     background-color: ${colors.rose50};
@@ -27,7 +29,114 @@ const Description = styled.p`
     font-size: 14px;
 `;
 
-export default function Cart({ className, totalQuantity }) {
+const ItemsList = styled.ul`
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+`;
+
+const CartItem = styled.li`
+    list-style-type: none;
+
+    h4,
+    b {
+        font-weight: 600;
+    }
+
+    h4 {
+        margin: 4px 0;
+    }
+
+    > p {
+        margin: 10px 0;
+        display: flex;
+        gap: 14px;
+    }
+
+    &:first-child {
+        h4 {
+            margin-top: -30px;
+        }
+    }
+`;
+
+const ItemQuantity = styled.span`
+    color: ${colors.primary};
+    font-weight: 600;
+`;
+
+const ItemIndividualCost = styled.span`
+    color: ${colors.rose500};
+`;
+
+const ItemTotal = styled.span`
+    font-weight: 600;
+    color: ${colors.rose500};
+`;
+
+const OrderTotal = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const TotalCost = styled.span`
+    font-size: 1.625rem;
+    font-weight: 700;
+`;
+
+const DeliveryInfo = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 40px;
+    padding: 10px;
+    background-color: ${colors.rose75};
+
+    b {
+        font-weight: 600;
+    }
+
+    p {
+        margin: 0;
+    }
+`;
+
+export default function Cart({ className, cart, totalQuantity }) {
+    const items = cart.items.map((item) => {
+        if (item.quantity > 0) {
+            const individualPrice = convertToUSD(item.price);
+
+            const totalPrice = convertToUSD(item.price * item.quantity);
+
+            return (
+                <CartItem key={item.name}>
+                    <h4>{item.name}</h4>
+                    <p>
+                        <ItemQuantity>{item.quantity}x</ItemQuantity>
+                        <ItemIndividualCost>
+                            @ {individualPrice}
+                        </ItemIndividualCost>
+                        <ItemTotal>{totalPrice}</ItemTotal>
+                    </p>
+                </CartItem>
+            );
+        }
+    });
+
+    const totalCost = () => {
+        let cost = 0;
+        cart.items.forEach((item) => {
+            if (item.quantity > 0) {
+                cost += item.quantity * item.price;
+            }
+        });
+        cost = convertToUSD(cost);
+        return cost;
+    };
+
     return (
         <Panel className={className}>
             <Heading>Your Cart ({totalQuantity})</Heading>
@@ -39,7 +148,19 @@ export default function Cart({ className, totalQuantity }) {
                     </Description>
                 </>
             ) : (
-                <p>Items in cart.</p>
+                <>
+                    <ItemsList>{items}</ItemsList>
+                    <OrderTotal className="flex-row-space-between">
+                        <span>Order Total</span>
+                        <TotalCost>{totalCost()}</TotalCost>
+                    </OrderTotal>
+                    <DeliveryInfo>
+                        <img src={iconCarbonNeutral} alt="" aria-hidden />
+                        <p>
+                            This is a <b> carbon-neutral </b> delivery
+                        </p>
+                    </DeliveryInfo>
+                </>
             )}
         </Panel>
     );
