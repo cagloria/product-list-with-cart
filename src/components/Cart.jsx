@@ -38,6 +38,7 @@ const ItemsList = styled.ul`
 
 const CartItem = styled.li`
     list-style-type: none;
+    font-size: 0.875rem;
 
     h4,
     b {
@@ -51,7 +52,7 @@ const CartItem = styled.li`
     > p {
         margin: 10px 0;
         display: flex;
-        gap: 14px;
+        gap: 12px;
     }
 
     &:first-child {
@@ -80,20 +81,26 @@ const OrderTotal = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-`;
 
-const TotalCost = styled.span`
-    font-size: 1.625rem;
-    font-weight: 700;
+    span:first-child {
+        font-size: 0.875rem;
+    }
+
+    span:last-child {
+        font-size: 1.5625rem;
+        font-weight: 700;
+    }
 `;
 
 const DeliveryInfo = styled.div`
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 4px;
     margin-top: 40px;
     padding: 10px;
     background-color: ${colors.rose75};
+    font-size: 0.875rem;
 
     b {
         font-weight: 600;
@@ -152,7 +159,7 @@ export default function Cart({ className, cart, totalQuantity }) {
                     <ItemsList>{items}</ItemsList>
                     <OrderTotal className="flex-row-space-between">
                         <span>Order Total</span>
-                        <TotalCost>{totalCost()}</TotalCost>
+                        <span>{totalCost()}</span>
                     </OrderTotal>
                     <DeliveryInfo>
                         <img src={iconCarbonNeutral} alt="" aria-hidden />

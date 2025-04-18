@@ -58,6 +58,7 @@ const CartPanel = styled(Cart)`
     }
 `;
 
+// FIXME: Adjust to remove entire data from cart on loading app
 export default function App() {
     const [cart, setCart] = useState({ cartQuantity: 0, items: data });
 
