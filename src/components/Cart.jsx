@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import CartItem from "./CartItem";
 import { colors } from "../styling/Variables";
+import { convertToUSD } from "../utility/utility";
 import imgEmptyCart from "../assets/icons/illustration-empty-cart.svg";
 import iconCarbonNeutral from "../assets/icons/icon-carbon-neutral.svg";
-import { convertToUSD } from "../utility/utility";
 
 const Panel = styled.div`
     background-color: ${colors.rose50};
@@ -36,57 +37,18 @@ const ItemsList = styled.ul`
     gap: 20px;
 `;
 
-const CartItem = styled.li`
-    list-style-type: none;
-    font-size: 0.875rem;
-
-    h4,
-    b {
-        font-weight: 600;
-    }
-
-    h4 {
-        margin: 4px 0;
-    }
-
-    > p {
-        margin: 10px 0;
-        display: flex;
-        gap: 12px;
-    }
-
-    &:first-child {
-        h4 {
-            margin-top: -30px;
-        }
-    }
-`;
-
-const ItemQuantity = styled.span`
-    color: ${colors.primary};
-    font-weight: 600;
-`;
-
-const ItemIndividualCost = styled.span`
-    color: ${colors.rose500};
-`;
-
-const ItemTotal = styled.span`
-    font-weight: 600;
-    color: ${colors.rose500};
-`;
-
 const OrderTotal = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-top: 24px;
 
-    span:first-child {
+    span:first-of-type {
         font-size: 0.875rem;
     }
 
-    span:last-child {
+    span:last-of-type {
         font-size: 1.5625rem;
         font-weight: 700;
     }
@@ -97,7 +59,7 @@ const DeliveryInfo = styled.div`
     justify-content: center;
     align-items: center;
     gap: 4px;
-    margin-top: 40px;
+    margin-top: 28px;
     padding: 10px;
     background-color: ${colors.rose75};
     font-size: 0.875rem;
@@ -111,31 +73,24 @@ const DeliveryInfo = styled.div`
     }
 `;
 
-export default function Cart({ className, cart, totalQuantity }) {
-    const items = cart.items.map((item) => {
+const ConfirmOrderButton = styled.button`
+    margin-top: 31px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 1rem;
+    width: 100%;
+`;
+
+export default function Cart({ className, cartItems, totalQuantity }) {
+    const items = cartItems.map((item) => {
         if (item.quantity > 0) {
-            const individualPrice = convertToUSD(item.price);
-
-            const totalPrice = convertToUSD(item.price * item.quantity);
-
-            return (
-                <CartItem key={item.name}>
-                    <h4>{item.name}</h4>
-                    <p>
-                        <ItemQuantity>{item.quantity}x</ItemQuantity>
-                        <ItemIndividualCost>
-                            @ {individualPrice}
-                        </ItemIndividualCost>
-                        <ItemTotal>{totalPrice}</ItemTotal>
-                    </p>
-                </CartItem>
-            );
+            return <CartItem itemObj={item} key={item.name} />;
         }
     });
 
     const totalCost = () => {
         let cost = 0;
-        cart.items.forEach((item) => {
+        cartItems.forEach((item) => {
             if (item.quantity > 0) {
                 cost += item.quantity * item.price;
             }
@@ -157,7 +112,7 @@ export default function Cart({ className, cart, totalQuantity }) {
             ) : (
                 <>
                     <ItemsList>{items}</ItemsList>
-                    <OrderTotal className="flex-row-space-between">
+                    <OrderTotal>
                         <span>Order Total</span>
                         <span>{totalCost()}</span>
                     </OrderTotal>
@@ -167,6 +122,9 @@ export default function Cart({ className, cart, totalQuantity }) {
                             This is a <b> carbon-neutral </b> delivery
                         </p>
                     </DeliveryInfo>
+                    <ConfirmOrderButton className="button--primary">
+                        Confirm Order
+                    </ConfirmOrderButton>
                 </>
             )}
         </Panel>

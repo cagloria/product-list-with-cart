@@ -58,7 +58,9 @@ const CartPanel = styled(Cart)`
     }
 `;
 
-// FIXME: Adjust to remove entire data from cart on loading app
+// FIXME: Adjust to remove entire data from cart on loading app, allowing each
+// item to be added in the order that which the user adds it, not in the order
+// that data.json dictates
 export default function App() {
     const [cart, setCart] = useState({ cartQuantity: 0, items: data });
 
@@ -106,7 +108,10 @@ export default function App() {
                 <Section>
                     <Heading>Desserts</Heading>
                     <ItemsList>{listItems ?? "Loading items..."}</ItemsList>
-                    <CartPanel cart={cart} totalQuantity={cart.cartQuantity} />
+                    <CartPanel
+                        cartItems={cart.items}
+                        totalQuantity={cart.cartQuantity}
+                    />
                 </Section>
             </main>
         </>

@@ -22,6 +22,7 @@ export const GlobalStyle = createGlobalStyle`
     button {
         width: fit-content;
         display: flex;
+        justify-content: center;
         background-color: ${colors.rose50};
         color: ${colors.rose900};
         align-items: center;
