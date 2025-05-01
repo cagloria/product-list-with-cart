@@ -81,14 +81,20 @@ const ConfirmOrderButton = styled.button`
     width: 100%;
 `;
 
-export default function Cart({ className, cartItems, totalQuantity }) {
+/**
+ * Panel displaying total items in cart and button to confirm order
+ * @param {object} cartItems        All items in app
+ * @param {number} totalQuantity    Total quantity of all items
+ * @returns Div element displaying items, cart total, and confirm order button
+ */
+export default function Cart({ cartItems, totalQuantity }) {
     const items = cartItems.map((item) => {
         if (item.quantity > 0) {
             return <CartItem itemObj={item} key={item.name} />;
         }
     });
 
-    const totalCost = () => {
+    function totalCost() {
         let cost = 0;
         cartItems.forEach((item) => {
             if (item.quantity > 0) {
@@ -97,10 +103,10 @@ export default function Cart({ className, cartItems, totalQuantity }) {
         });
         cost = convertToUSD(cost);
         return cost;
-    };
+    }
 
     return (
-        <Panel className={className}>
+        <Panel>
             <Heading>Your Cart ({totalQuantity})</Heading>
             {totalQuantity <= 0 ? (
                 <>
