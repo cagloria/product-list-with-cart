@@ -67,15 +67,20 @@ const RemoveItemButton = styled.button`
     }
 `;
 
-// TODO: Button to remove all of a certain item from the cart.
 /**
  * Individual item displayed in a cart
  * @param {object} itemObj  JSON item object
- * @returns List item showing item name, quantity, individual price, total 
+ * @returns List item showing item name, quantity, individual price, total
  * price, and button to remove all of this item from cart
  */
-export default function CartItem(itemObj) {
-    itemObj = itemObj.itemObj;
+export default function CartItem({ itemObj, onRemovalAll }) {
+    /**
+     * Remove all of this item from the cart
+     */
+    function removeAll() {
+        onRemovalAll(itemObj.name);
+    }
+
     return (
         <Item>
             <h4>{itemObj.name}</h4>
@@ -86,7 +91,10 @@ export default function CartItem(itemObj) {
                 </IndividualCost>
                 <Total>{convertToUSD(itemObj.price)}</Total>
             </p>
-            <RemoveItemButton aria-label="Remove all of this item from cart">
+            <RemoveItemButton
+                aria-label="Remove all of this item from cart"
+                onClick={removeAll}
+            >
                 <img src={iconRemove} alt="" aria-hidden />
             </RemoveItemButton>
         </Item>

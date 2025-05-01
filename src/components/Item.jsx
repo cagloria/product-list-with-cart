@@ -99,7 +99,7 @@ const IncrementDecrementButton = styled.button`
 /**
  * Individual item that appears within the shopping page.
  * @param {string} name                 Name of item
- * @param {string} category             Cateogry of item
+ * @param {string} category             Category of item
  * @param {number} price                Price of item
  * @param {object} imageObject          Object to hold image URLs
  * @param {function} onQuantityChange   Function to handle item quantity change
@@ -119,12 +119,18 @@ export default function Item({
 
     price = convertToUSD(price);
 
+    /**
+     * Adds one of this item to cart. Prevents function if quantity is over 99.
+     */
     function addItem() {
         if (quantity < 100) {
             onQuantityChange(name, 1);
         }
     }
 
+    /**
+     * Removes one of this item from the cart.
+     */
     function removeItem() {
         if (quantity > 0) {
             onQuantityChange(name, -1);

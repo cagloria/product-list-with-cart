@@ -101,6 +101,25 @@ export default function App() {
         });
     }
 
+    /**
+     * Remove all of an individual item from the cart
+     * @param {string} itemName Name of item
+     */
+    function handleItemRemoval(itemName) {
+        let newCartArr = cart.items;
+        let index = newCartArr.findIndex((item) => item.name === itemName);
+        const originalCartQuantity = newCartArr[index].quantity;
+
+        if (newCartArr[index].quantity) {
+            newCartArr[index].quantity = 0;
+        }
+
+        setCart({
+            cartQuantity: cart.cartQuantity - originalCartQuantity,
+            items: newCartArr,
+        });
+    }
+
     return (
         <>
             <GlobalStyle />
@@ -111,6 +130,7 @@ export default function App() {
                     <CartPanel
                         cartItems={cart.items}
                         totalQuantity={cart.cartQuantity}
+                        onItemRemoval={handleItemRemoval}
                     />
                 </Section>
             </main>

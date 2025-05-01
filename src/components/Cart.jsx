@@ -87,13 +87,31 @@ const ConfirmOrderButton = styled.button`
  * @param {number} totalQuantity    Total quantity of all items
  * @returns Div element displaying items, cart total, and confirm order button
  */
-export default function Cart({ cartItems, totalQuantity }) {
+export default function Cart({ cartItems, totalQuantity, onItemRemoval }) {
     const items = cartItems.map((item) => {
         if (item.quantity > 0) {
-            return <CartItem itemObj={item} key={item.name} />;
+            return (
+                <CartItem
+                    itemObj={item}
+                    key={item.name}
+                    onRemovalAll={handleItemRemoval}
+                />
+            );
         }
     });
 
+    /**
+     * Remove all of an individual item from the cart
+     * @param {string} itemName Name of item
+     */
+    function handleItemRemoval(itemName) {
+        onItemRemoval(itemName);
+    }
+
+    /**
+     * Calculates the total cost of all items in the cart
+     * @returns Total cost
+     */
     function totalCost() {
         let cost = 0;
         cartItems.forEach((item) => {
