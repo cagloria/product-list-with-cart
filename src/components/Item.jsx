@@ -53,7 +53,6 @@ const CartQuantityContainer = styled.div`
     justify-self: center;
     background-color: ${colors.primary};
     border: 1px solid transparent;
-    /* padding: 0 3px; */
     border-radius: 60px;
     font-weight: 600;
 
@@ -72,7 +71,7 @@ const AddToCartButton = styled.button`
     box-sizing: border-box;
 `;
 
-const IncrementDecrementButton = styled.button`
+const QuantityIconButton = styled.button`
     padding: 0;
     aspect-ratio: 1;
     justify-content: center;
@@ -97,14 +96,14 @@ const IncrementDecrementButton = styled.button`
 `;
 
 /**
- * Individual item that appears within the shopping page.
+ * Individual item that appears within the shopping page
  * @param {string} name                 Name of item
  * @param {string} category             Category of item
  * @param {number} price                Price of item
  * @param {object} imageObject          Object to hold image URLs
  * @param {function} onQuantityChange   Function to handle item quantity change
  * @param {number} quantity             Quantity of item
- * @returns List item displaying item image, details, and ability to change 
+ * @returns List item displaying item image, details, and ability to change
  * quantity
  */
 export default function Item({
@@ -116,8 +115,20 @@ export default function Item({
     quantity = 0,
 }) {
     const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
-
     price = convertToUSD(price);
+
+    /**
+     *
+     * @param {function} functionCalled Function for this button to call
+     * @param {string} icon             Icon source
+     * @param {string} altText          Alt text for button
+     * @returns
+     */
+    const changeQuantityButton = (functionCalled, icon, altText) => (
+        <QuantityIconButton onClick={functionCalled}>
+            <img src={icon} alt={altText} />
+        </QuantityIconButton>
+    );
 
     /**
      * Adds one of this item to cart. Prevents function if quantity is over 99.
@@ -157,13 +168,13 @@ export default function Item({
                     </AddToCartButton>
                 ) : (
                     <>
-                        <IncrementDecrementButton onClick={removeItem}>
-                            <img src={iconDecrement} alt="Remove 1" />
-                        </IncrementDecrementButton>
+                        {changeQuantityButton(
+                            removeItem,
+                            iconDecrement,
+                            "Remove 1"
+                        )}
                         <span>{quantity}</span>
-                        <IncrementDecrementButton onClick={addItem}>
-                            <img src={iconIncrement} alt="Add 1" />
-                        </IncrementDecrementButton>
+                        {changeQuantityButton(addItem, iconIncrement, "Add 1")}
                     </>
                 )}
             </CartQuantityContainer>

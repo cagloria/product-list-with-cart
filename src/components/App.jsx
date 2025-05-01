@@ -85,18 +85,24 @@ export default function App() {
         );
     });
 
-    function handleItemQuantityChange(itemName, quantityChange) {
+    /**
+     * Changes total quantity of this item in the cart
+     * @param {string} itemName             Name of item
+     * @param {number} quantityDifference   Difference to change quantity of
+     *                                      this item by
+     */
+    function handleItemQuantityChange(itemName, quantityDifference) {
         let newCartArr = cart.items;
         let index = newCartArr.findIndex((item) => item.name === itemName);
 
         if (newCartArr[index].quantity) {
-            newCartArr[index].quantity += quantityChange;
+            newCartArr[index].quantity += quantityDifference;
         } else {
             newCartArr[index].quantity = 1;
         }
 
         setCart({
-            cartQuantity: (cart.cartQuantity += quantityChange),
+            cartQuantity: (cart.cartQuantity += quantityDifference),
             items: newCartArr,
         });
     }
