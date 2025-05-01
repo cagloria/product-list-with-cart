@@ -38,13 +38,13 @@ const Price = styled.p`
     grid-row: 5 / 6;
 `;
 
-// FIXME: Having quantity > 0 shifts content up
 // TODO: Animation to distinguish Add to Cart and increment/decrement
 const CartQuantityContainer = styled.div`
     grid-row: 2 / 3;
     position: relative;
     bottom: 22px;
     box-sizing: border-box;
+    height: 43px;
     min-height: 43px;
     min-width: 160px;
     display: flex;
@@ -52,7 +52,7 @@ const CartQuantityContainer = styled.div`
     align-items: center;
     justify-self: center;
     background-color: ${colors.primary};
-    /* border: 1px solid transparent; */
+    border: 1px solid transparent;
     /* padding: 0 3px; */
     border-radius: 60px;
     font-weight: 600;
@@ -67,6 +67,8 @@ const CartQuantityContainer = styled.div`
 
 const AddToCartButton = styled.button`
     width: 100%;
+    height: 100%;
+    border: none;
     box-sizing: border-box;
 `;
 
