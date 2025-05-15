@@ -18,7 +18,7 @@ const Section = styled.section`
 
     @media screen and (min-width: 1024px) {
         grid-template-columns: 1fr minmax(380px, auto);
-        grid-template-areas: "h c" "i c" "i c";
+        grid-template-areas: "h c" "i c";
         padding-top: 86px;
         padding-left: 7.8vw;
         padding-right: 7.8vw;

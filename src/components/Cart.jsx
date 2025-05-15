@@ -83,11 +83,19 @@ const ConfirmOrderButton = styled.button`
 
 /**
  * Panel displaying total items in cart and button to confirm order
+ * @param {string} className        Prop to allow styled-components to style
+ *                                  Cart outside of this component
  * @param {object} cartItems        All items in app
  * @param {number} totalQuantity    Total quantity of all items
+ * @param {function} onItemRemoval  Passes item removal function
  * @returns Div element displaying items, cart total, and confirm order button
  */
-export default function Cart({ cartItems, totalQuantity, onItemRemoval }) {
+export default function Cart({
+    className,
+    cartItems,
+    totalQuantity,
+    onItemRemoval,
+}) {
     const items = cartItems.map((item) => {
         if (item.quantity > 0) {
             return (
@@ -124,7 +132,7 @@ export default function Cart({ cartItems, totalQuantity, onItemRemoval }) {
     }
 
     return (
-        <Panel>
+        <Panel className={className}>
             <Heading>Your Cart ({totalQuantity})</Heading>
             {totalQuantity <= 0 ? (
                 <>
