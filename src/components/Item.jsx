@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import iconAddCart from "../assets/icons/icon-add-to-cart.svg";
 import { colors } from "../styling/Variables";
@@ -11,11 +10,14 @@ const ItemComponent = styled.li`
     display: grid;
 `;
 
-// TODO: Styling for when item has > 0 quantity
 const ItemImage = styled.img`
+    box-sizing: border-box;
+    border: 3px solid
+        ${(props) => (props.$quantity > 0 ? colors.primary : "transparent")};
     border-radius: 8px;
     width: 100%;
     grid-row: 1 / 2;
+    transition: border-color 0.1s ease-in;
 `;
 
 const CategoryName = styled.p`
@@ -155,7 +157,9 @@ export default function Item({
                 srcSet={sourceSet}
                 sizes="(min-width: 600px) 427px, (min-width: 1024px) 502px, 654px"
                 src={imageObject.mobile}
-                alt={name}
+                aria-hidden
+                alt=""
+                $quantity={quantity}
             />
             <CategoryName>{category}</CategoryName>
             <ItemName>{name}</ItemName>

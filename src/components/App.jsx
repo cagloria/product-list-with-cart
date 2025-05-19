@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { GlobalStyle } from "../styling/Theme";
 import data from "../data/data.json";

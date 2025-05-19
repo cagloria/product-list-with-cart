@@ -37,12 +37,12 @@ const Quantity = styled.span`
     font-weight: 600;
 `;
 
-const IndividualCost = styled.span`
+const TotalItemCost = styled.span`
     color: ${colors.rose500};
     grid-column: 1;
 `;
 
-const Total = styled.span`
+const IndividualCost = styled.span`
     color: ${colors.rose500};
     font-weight: 600;
 `;
@@ -74,6 +74,9 @@ const RemoveItemButton = styled.button`
  * price, and button to remove all of this item from cart
  */
 export default function CartItem({ itemObj, onRemovalAll }) {
+    const totalItemCost = convertToUSD(itemObj.price * itemObj.quantity);
+    const individualItemCost = convertToUSD(itemObj.price);
+
     /**
      * Remove all of this item from the cart
      */
@@ -85,11 +88,17 @@ export default function CartItem({ itemObj, onRemovalAll }) {
         <Item>
             <h4>{itemObj.name}</h4>
             <p>
-                <Quantity>{itemObj.quantity}x</Quantity>
-                <IndividualCost>
-                    @ {convertToUSD(itemObj.price * itemObj.quantity)}
+                <Quantity aria-label={"Quantity: " + itemObj.quantity}>
+                    {itemObj.quantity}x
+                </Quantity>
+                <TotalItemCost aria-label={"Item total: " + totalItemCost}>
+                    @ {totalItemCost}
+                </TotalItemCost>
+                <IndividualCost
+                    aria-label={"Individual Cost: " + individualItemCost}
+                >
+                    {individualItemCost}
                 </IndividualCost>
-                <Total>{convertToUSD(itemObj.price)}</Total>
             </p>
             <RemoveItemButton
                 aria-label="Remove all of this item from cart"
