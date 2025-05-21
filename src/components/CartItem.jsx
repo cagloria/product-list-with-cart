@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { convertToUSD } from "../utility/utility";
 import { colors } from "../styling/Variables";
-import iconRemove from "../assets/icons/icon-remove-item.svg";
+import RemoveItemIconSVG from "../assets/icons/icon-remove-item.svg?react";
 
 const Item = styled.li`
     list-style-type: none;
@@ -60,10 +60,23 @@ const RemoveItemButton = styled.button`
     align-self: center;
     border: 0;
 
-    img {
+    svg {
         border: 1px solid ${colors.rose400};
         border-radius: 50%;
         padding: 2px;
+        transition: border-color 0.2s ease;
+        path {
+            transition: fill 0.2s ease;
+        }
+    }
+
+    &:hover {
+        svg {
+            border-color: ${colors.rose900};
+            path {
+                fill: ${colors.rose900};
+            }
+        }
     }
 `;
 
@@ -95,16 +108,16 @@ export default function CartItem({ itemObj, onRemovalAll }) {
                     @ {totalItemCost}
                 </TotalItemCost>
                 <IndividualCost
-                    aria-label={"Individual Cost: " + individualItemCost}
+                    aria-label={"Individual cost: " + individualItemCost}
                 >
                     {individualItemCost}
                 </IndividualCost>
             </p>
             <RemoveItemButton
-                aria-label="Remove all of this item from cart"
+                aria-label={`Remove all ${itemObj.name} from cart`}
                 onClick={removeAll}
             >
-                <img src={iconRemove} alt="" aria-hidden />
+                <RemoveItemIconSVG aria-hidden />
             </RemoveItemButton>
         </Item>
     );

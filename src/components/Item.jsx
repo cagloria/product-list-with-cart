@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import iconAddCart from "../assets/icons/icon-add-to-cart.svg";
 import { colors } from "../styling/Variables";
-import iconDecrement from "../assets/icons/icon-decrement-quantity.svg";
-import iconIncrement from "../assets/icons/icon-increment-quantity.svg";
 import { convertToUSD } from "../utility/utility";
+import CartIcon from "../assets/icons/icon-add-to-cart.svg?react";
+import DecrementIconSVG from "../assets/icons/icon-decrement-quantity.svg?react";
+import IncrementIconSVG from "../assets/icons/icon-increment-quantity.svg?react";
 
 const ItemComponent = styled.li`
     list-style: none;
@@ -73,12 +73,13 @@ const AddToCartButton = styled.button`
     box-sizing: border-box;
 `;
 
-const QuantityIconButton = styled.button`
+const QuantityChangeButton = styled.button`
     padding: 0;
     aspect-ratio: 1;
     justify-content: center;
     background-color: ${colors.primary};
     border: none;
+    transition: background-color 0.2 ease;
 
     &:first-child {
         margin-left: 12px;
@@ -88,12 +89,22 @@ const QuantityIconButton = styled.button`
         margin-right: 12px;
     }
 
-    img {
-        width: 10px;
+    svg {
         padding: 4px;
-        aspect-ratio: 1;
+        width: 10px;
+        height: 10px;
         border: 1px solid ${colors.rose50};
         border-radius: 50%;
+        path {
+            transition: fill 0.2s ease;
+        }
+    }
+
+    &:hover {
+        background-color: ${colors.rose100};
+        svg path {
+            fill: ${colors.primary};
+        }
     }
 `;
 
@@ -118,19 +129,6 @@ export default function Item({
 }) {
     const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
     price = convertToUSD(price);
-
-    /**
-     *
-     * @param {function} functionCalled Function for this button to call
-     * @param {string} icon             Icon source
-     * @param {string} altText          Alt text for button
-     * @returns
-     */
-    const changeQuantityButton = (functionCalled, icon, altText) => (
-        <QuantityIconButton onClick={functionCalled}>
-            <img src={icon} alt={altText} />
-        </QuantityIconButton>
-    );
 
     /**
      * Adds one of this item to cart. Prevents function if quantity is over 99.
@@ -167,18 +165,24 @@ export default function Item({
             <CartQuantityContainer>
                 {quantity < 1 ? (
                     <AddToCartButton onClick={addItem}>
-                        <img src={iconAddCart} alt="" aria-hidden />
+                        <CartIcon aria-hidden />
                         Add to Cart
                     </AddToCartButton>
                 ) : (
                     <>
-                        {changeQuantityButton(
-                            removeItem,
-                            iconDecrement,
-                            "Remove 1"
-                        )}
+                        <QuantityChangeButton
+                            onClick={removeItem}
+                            aria-label="Remove 1"
+                        >
+                            <DecrementIconSVG />
+                        </QuantityChangeButton>
                         <span>{quantity}</span>
-                        {changeQuantityButton(addItem, iconIncrement, "Add 1")}
+                        <QuantityChangeButton
+                            onClick={addItem}
+                            aria-label="Add 1"
+                        >
+                            <IncrementIconSVG />
+                        </QuantityChangeButton>
                     </>
                 )}
             </CartQuantityContainer>
