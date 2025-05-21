@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../styling/Variables";
 import { convertToUSD } from "../utility/utility";
+import IconButton from "../ui/IconButton";
 import CartIcon from "../assets/icons/icon-add-to-cart.svg?react";
 import DecrementIconSVG from "../assets/icons/icon-decrement-quantity.svg?react";
 import IncrementIconSVG from "../assets/icons/icon-increment-quantity.svg?react";
@@ -22,8 +23,8 @@ const ItemImage = styled.img`
 
 const CategoryName = styled.p`
     color: ${colors.rose500};
-    font-size: 0.875rem;
-    margin: -5px 0 4px;
+    font-size: 0.87rem;
+    margin: -9px 0 6px;
     grid-row: 3 / 4;
 `;
 
@@ -73,14 +74,7 @@ const AddToCartButton = styled.button`
     box-sizing: border-box;
 `;
 
-const QuantityChangeButton = styled.button`
-    padding: 0;
-    aspect-ratio: 1;
-    justify-content: center;
-    background-color: ${colors.primary};
-    border: none;
-    transition: background-color 0.2 ease;
-
+const QuantityChangeButton = styled(IconButton)`
     &:first-child {
         margin-left: 12px;
     }
@@ -91,19 +85,17 @@ const QuantityChangeButton = styled.button`
 
     svg {
         padding: 4px;
-        width: 10px;
-        height: 10px;
         border: 1px solid ${colors.rose50};
         border-radius: 50%;
-        path {
-            transition: fill 0.2s ease;
-        }
     }
 
     &:hover {
-        background-color: ${colors.rose100};
-        svg path {
-            fill: ${colors.primary};
+        svg {
+            background-color: ${colors.rose100};
+
+            path {
+                fill: ${colors.primary};
+            }
         }
     }
 `;
@@ -171,18 +163,16 @@ export default function Item({
                 ) : (
                     <>
                         <QuantityChangeButton
-                            onClick={removeItem}
-                            aria-label="Remove 1"
-                        >
-                            <DecrementIconSVG />
-                        </QuantityChangeButton>
+                            IconComponent={DecrementIconSVG}
+                            label="Remove 1"
+                            calledFunction={removeItem}
+                        />
                         <span>{quantity}</span>
                         <QuantityChangeButton
-                            onClick={addItem}
-                            aria-label="Add 1"
-                        >
-                            <IncrementIconSVG />
-                        </QuantityChangeButton>
+                            IconComponent={IncrementIconSVG}
+                            label="Add 1"
+                            calledFunction={addItem}
+                        />
                     </>
                 )}
             </CartQuantityContainer>

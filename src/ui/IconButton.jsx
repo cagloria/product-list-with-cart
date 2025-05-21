@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Button = styled.button`
     border: none;
+    background-color: transparent;
     min-width: 40px;
     min-height: 40px;
     display: flex;
@@ -25,13 +26,14 @@ const Button = styled.button`
 `;
 
 /**
- * 
- * @param {string} className        Prop to allow styled-components to style 
- *                                  IconButton outside of this component 
+ *
+ * @param {string} className        Prop to allow styled-components to style
+ *                                  IconButton outside of this component
  * @param {function} IconComponent  SVG component using vite-plugin-svgr
  * @param {string} label            Alt label for button
  * @param {function} calledFunction On-click function for button
- * @returns 
+ * @returns Button with solely an icon as its content, with an aria-label and a
+ * called function
  */
 export default function IconButton({
     className,

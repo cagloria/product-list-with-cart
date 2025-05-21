@@ -6,12 +6,12 @@ import Item from "./Item";
 import Cart from "./Cart";
 
 const Section = styled.section`
-    padding: 21px 6.4vw 27px;
+    padding: 21px 5.7vw 27px;
     max-width: 1440px;
     box-sizing: border-box;
     margin: 0 auto;
     display: grid;
-    gap: 30px;
+    gap: 28px;
     grid-template-columns: auto;
     grid-auto-rows: auto;
     grid-template-areas: "h" "i" "c";
