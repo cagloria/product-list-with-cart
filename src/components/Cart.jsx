@@ -42,7 +42,6 @@ const OrderTotal = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 24px;
 
     span:first-of-type {
         font-size: 0.875rem;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { convertToUSD } from "../utility/utility";
 import { colors } from "../styling/Variables";
+import IconButton from "../ui/IconButton.jsx";
 import RemoveItemIconSVG from "../assets/icons/icon-remove-item.svg?react";
 
 const Item = styled.li`
@@ -9,6 +10,8 @@ const Item = styled.li`
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas: "h b" "p b";
+    border-bottom: 1px solid ${colors.rose100};
+    padding: 10px 0;
 
     h4,
     b {
@@ -47,32 +50,25 @@ const IndividualCost = styled.span`
     font-weight: 600;
 `;
 
-const RemoveItemButton = styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
+const RemoveItemButton = styled(IconButton)`
     margin-bottom: 10px;
     margin-right: -10px;
     padding: 0;
     grid-area: b;
     align-self: center;
-    border: 0;
 
     svg {
-        border: 1px solid ${colors.rose400};
+        border: 2px solid ${colors.rose300};
         border-radius: 50%;
         padding: 2px;
-        transition: border-color 0.2s ease;
-        path {
-            transition: fill 0.2s ease;
-        }
+        width: 12px;
+        height: 12px;
     }
 
     &:hover {
         svg {
             border-color: ${colors.rose900};
+
             path {
                 fill: ${colors.rose900};
             }
@@ -104,21 +100,23 @@ export default function CartItem({ itemObj, onRemovalAll }) {
                 <Quantity aria-label={"Quantity: " + itemObj.quantity}>
                     {itemObj.quantity}x
                 </Quantity>
+
                 <TotalItemCost aria-label={"Item total: " + totalItemCost}>
                     @ {totalItemCost}
                 </TotalItemCost>
+
                 <IndividualCost
                     aria-label={"Individual cost: " + individualItemCost}
                 >
                     {individualItemCost}
                 </IndividualCost>
             </p>
+
             <RemoveItemButton
-                aria-label={`Remove all ${itemObj.name} from cart`}
-                onClick={removeAll}
-            >
-                <RemoveItemIconSVG aria-hidden />
-            </RemoveItemButton>
+                IconComponent={RemoveItemIconSVG}
+                label={`Remove all ${itemObj.name} from cart`}
+                calledFunction={removeAll}
+            />
         </Item>
     );
 }
