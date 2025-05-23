@@ -36,7 +36,7 @@ Users should be able to:
 -   Flexbox
 -   CSS Grid
 -   Mobile-first workflow
--   [React](https://reactjs.org/) - JS library
+-   [React](https://react.dev/) - JS library
 -   [Styled Components](https://styled-components.com/) - For styles
 -   [vite-plugin-svgr](https://www.npmjs.com/package/vite-plugin-svgr) - For turning SVGs into react components
 
