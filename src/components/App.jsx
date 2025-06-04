@@ -4,9 +4,11 @@ import { GlobalStyle } from "../styling/Theme";
 import data from "../data/data.json";
 import Item from "./Item";
 import Cart from "./Cart";
+import OrderConfirmation from "./OrderConfirmation";
 
 const Section = styled.section`
     padding: 21px 5.7vw 27px;
+    position: relative;
     max-width: 1440px;
     box-sizing: border-box;
     margin: 0 auto;
@@ -63,6 +65,7 @@ const CartPanel = styled(Cart)`
 // that data.json dictates
 export default function App() {
     const [cart, setCart] = useState({ cartQuantity: 0, items: data });
+    const [confirmationOpen, setConformationOpen] = useState(false);
 
     const listItems = cart.items.map((item) => {
         const itemsArr = cart.items;
@@ -126,6 +129,14 @@ export default function App() {
         });
     }
 
+    function handleOpenConfirmation() {
+        setConformationOpen(true);
+    }
+
+    function handleStartNewOrder() {
+        setConformationOpen(false);
+    }
+
     return (
         <>
             <GlobalStyle />
@@ -137,7 +148,14 @@ export default function App() {
                         cartItems={cart.items}
                         totalQuantity={cart.cartQuantity}
                         onItemRemoval={handleItemRemoval}
+                        onOpenConfirmation={handleOpenConfirmation}
                     />
+                    {confirmationOpen ? (
+                        <OrderConfirmation
+                            cartItems={cart.items}
+                            onStartNewOrder={handleStartNewOrder}
+                        />
+                    ) : null}
                 </Section>
             </main>
         </>

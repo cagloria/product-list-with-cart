@@ -19,6 +19,10 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 2.5rem;
     }
 
+    h2 {
+        font-size: 1.5rem;
+    }
+
     button {
         width: fit-content;
         display: flex;
@@ -32,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
         border-radius: 60px;
         font-size: 0.875rem;
         font-weight: 600;
-        transition: 0.2s ease border-color, 0.2s ease color;
+        transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 
         &:hover {
             color: ${colors.primary};

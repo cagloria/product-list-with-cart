@@ -14,10 +14,9 @@ const Panel = styled.div`
     flex-direction: column;
 `;
 
-const Heading = styled.h3`
+const Heading = styled.h2`
     color: ${colors.primary};
     margin: 0 0 40px;
-    font-size: 1.5rem;
 `;
 
 const Image = styled.img`
@@ -37,7 +36,8 @@ const ItemsList = styled.ul`
     gap: 20px;
 `;
 
-const OrderTotal = styled.div`
+const OrderTotal = styled.p`
+    margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -87,6 +87,7 @@ const ConfirmOrderButton = styled.button`
  * @param {object} cartItems        All items in app
  * @param {number} totalQuantity    Total quantity of all items
  * @param {function} onItemRemoval  Passes item removal function
+ * @param {function} onOpenConfirmation
  * @returns Div element displaying items, cart total, and confirm order button
  */
 export default function Cart({
@@ -94,6 +95,7 @@ export default function Cart({
     cartItems,
     totalQuantity,
     onItemRemoval,
+    onOpenConfirmation,
 }) {
     const items = cartItems.map((item) => {
         if (item.quantity > 0) {
@@ -130,6 +132,10 @@ export default function Cart({
         return cost;
     }
 
+    function openConfirmation() {
+        onOpenConfirmation();
+    }
+
     return (
         <Panel className={className}>
             <Heading>Your Cart ({totalQuantity})</Heading>
@@ -153,7 +159,10 @@ export default function Cart({
                             This is a <b> carbon-neutral </b> delivery
                         </p>
                     </DeliveryInfo>
-                    <ConfirmOrderButton className="button--primary">
+                    <ConfirmOrderButton
+                        className="button--primary"
+                        onClick={openConfirmation}
+                    >
                         Confirm Order
                     </ConfirmOrderButton>
                 </>
