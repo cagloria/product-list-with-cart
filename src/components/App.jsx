@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { GlobalStyle } from "../styling/Theme";
-import data from "../data/data.json";
+import dataJSON from "../data/data.json";
 import Item from "./Item";
 import Cart from "./Cart";
 import OrderConfirmation from "./OrderConfirmation";
@@ -60,12 +60,12 @@ const CartPanel = styled(Cart)`
     }
 `;
 
-// FIXME: Adjust to remove entire data from cart on loading app, allowing each
+// TODO: Adjust to remove entire data from cart on loading app, allowing each
 // item to be added in the order that which the user adds it, not in the order
 // that data.json dictates
 export default function App() {
-    const [cart, setCart] = useState({ cartQuantity: 0, items: data });
-    const [confirmationOpen, setConformationOpen] = useState(false);
+    const [cart, setCart] = useState({ cartQuantity: 0, items: dataJSON });
+    const [confirmationIsOpen, setConfirmationIsOpen] = useState(false);
 
     const listItems = cart.items.map((item) => {
         const itemsArr = cart.items;
@@ -130,11 +130,23 @@ export default function App() {
     }
 
     function handleOpenConfirmation() {
-        setConformationOpen(true);
+        setConfirmationIsOpen(true);
     }
 
     function handleStartNewOrder() {
-        setConformationOpen(false);
+        setConfirmationIsOpen(false);
+
+        let newItems = cart.items.map((item) => {
+            if (item.quantity > 0) {
+                // Create new item with quantity 0 and replace
+                return { ...item, quantity: 0 };
+            } else {
+                // No changes
+                return item;
+            }
+        });
+
+        setCart({ cartQuantity: 0, items: newItems });
     }
 
     return (
@@ -150,10 +162,11 @@ export default function App() {
                         onItemRemoval={handleItemRemoval}
                         onOpenConfirmation={handleOpenConfirmation}
                     />
-                    {confirmationOpen ? (
+                    {confirmationIsOpen ? (
                         <OrderConfirmation
                             cartItems={cart.items}
                             onStartNewOrder={handleStartNewOrder}
+                            isOpen={confirmationIsOpen}
                         />
                     ) : null}
                 </Section>

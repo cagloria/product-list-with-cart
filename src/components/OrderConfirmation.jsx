@@ -10,7 +10,7 @@ const Panel = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 32px;
-    padding: 20px 20px 24px;
+    padding: 40px 20px 24px;
     position: fixed;
     bottom: 0;
     background-color: ${colors.rose50};
@@ -31,22 +31,27 @@ const BackgroundShade = styled.div`
 
 const Heading = styled.h2`
     margin: 0;
-    font-size: 2.5rem;
+    margin-top: -8px;
+    margin-bottom: -26px;
+    font-size: 2.55rem;
+    line-height: 3.0625rem;
 `;
 
 const Message = styled.p`
     margin: 0;
+    margin-bottom: -9px;
     color: ${colors.rose500};
 `;
 
 const Summary = styled.div`
     background-color: ${colors.rose75};
-    padding: 24px 20px;
+    padding: 8px 28px 24px;
     border-radius: 8px;
 `;
 
 const ItemList = styled.ul`
     padding-left: 0;
+    padding-bottom: 8px;
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -54,13 +59,15 @@ const ItemList = styled.ul`
 
 const Item = styled.li`
     list-style-type: none;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     display: grid;
     grid-template-columns: auto auto 1fr auto;
     grid-auto-rows: auto;
     grid-template-areas: "i n n t" "i q c t";
     align-items: center;
-    column-gap: 12px;
+    column-gap: 15px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid ${colors.rose100};
 
     b {
         font-weight: 600;
@@ -77,6 +84,9 @@ const Item = styled.li`
 const ItemName = styled.span`
     font-weight: 600;
     grid-area: n;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 `;
 
 const ItemQuantity = styled.span`
@@ -93,7 +103,6 @@ const ItemIndividualCost = styled.span`
 const ItemTotalCost = styled.span`
     color: ${colors.rose500};
     font-weight: 600;
-    font-size: 14px;
     grid-area: t;
 `;
 
@@ -160,7 +169,6 @@ export default function OrderConfirmation({ cartItems, onStartNewOrder }) {
     }
 
     function startNewOrder() {
-        // TODO: Remove all items from cart
         onStartNewOrder();
     }
 
