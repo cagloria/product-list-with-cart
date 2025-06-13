@@ -19,6 +19,16 @@ const Panel = styled.div`
     button {
         width: 100%;
     }
+
+    @media screen and (min-width: 600px) {
+        inset: 0;
+        margin: auto;
+        height: fit-content;
+        border-radius: 12px;
+        width: 90vw;
+        max-width: 590px;
+        padding: 20px 40px 24px;
+    }
 `;
 
 const BackgroundShade = styled.div`
@@ -55,6 +65,8 @@ const ItemList = styled.ul`
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    max-height: 270px;
+    overflow-y: scroll;
 `;
 
 const Item = styled.li`
