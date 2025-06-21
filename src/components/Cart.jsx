@@ -6,7 +6,6 @@ import imgEmptyCart from "../assets/icons/illustration-empty-cart.svg";
 import iconCarbonNeutral from "../assets/icons/icon-carbon-neutral.svg";
 
 // TODO: Add cart to local storage
-// FIXME: Adjust padding on items list to avoid being so close to scrollbar
 const Panel = styled.div`
     background-color: ${colors.rose50};
     box-shadow: ${colors.rose100} 0px 8px 40px 8px;
@@ -38,14 +37,20 @@ const Description = styled.p`
 `;
 
 const ItemsList = styled.ul`
-    padding-left: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
     margin: 0;
 
     @media screen and (min-width: 1024px) {
+        overflow-x: hidden;
         overflow-y: scroll;
+        width: calc(100% + 10px);
+
+        li {
+            width: calc(100% - 10px);
+        }
     }
 `;
 
