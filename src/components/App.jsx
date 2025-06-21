@@ -20,6 +20,8 @@ const Section = styled.section`
 
     @media screen and (min-width: 1024px) {
         grid-template-columns: 1fr minmax(380px, auto);
+        grid-template-rows: auto 1fr;
+        align-items: start;
         grid-template-areas: "h c" "i c";
         padding-top: 86px;
         padding-left: 7.8vw;
@@ -63,6 +65,7 @@ const CartPanel = styled(Cart)`
 // TODO: Adjust to remove entire data from cart on loading app, allowing each
 // item to be added in the order that which the user adds it, not in the order
 // that data.json dictates
+// FIXME: Optimize replacing array of objects
 export default function App() {
     const [cart, setCart] = useState({ cartQuantity: 0, items: dataJSON });
     const [confirmationIsOpen, setConfirmationIsOpen] = useState(false);

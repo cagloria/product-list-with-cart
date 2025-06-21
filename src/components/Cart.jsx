@@ -5,6 +5,8 @@ import { convertToUSD } from "../utility/utility";
 import imgEmptyCart from "../assets/icons/illustration-empty-cart.svg";
 import iconCarbonNeutral from "../assets/icons/icon-carbon-neutral.svg";
 
+// TODO: Add cart to local storage
+// FIXME: Adjust padding on items list to avoid being so close to scrollbar
 const Panel = styled.div`
     background-color: ${colors.rose50};
     box-shadow: ${colors.rose100} 0px 8px 40px 8px;
@@ -12,11 +14,17 @@ const Panel = styled.div`
     padding: 26px 24px;
     display: flex;
     flex-direction: column;
+
+    @media screen and (min-width: 1024px) {
+        top: 86px;
+        position: sticky;
+        max-height: 75vh;
+    }
 `;
 
 const Heading = styled.h2`
     color: ${colors.primary};
-    margin: 0 0 40px;
+    margin: 0 0 20px;
 `;
 
 const Image = styled.img`
@@ -34,6 +42,11 @@ const ItemsList = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin: 0;
+
+    @media screen and (min-width: 1024px) {
+        overflow-y: scroll;
+    }
 `;
 
 const OrderTotal = styled.p`

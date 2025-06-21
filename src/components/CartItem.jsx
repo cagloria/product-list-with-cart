@@ -29,10 +29,6 @@ const Item = styled.li`
         gap: 12px;
         grid-area: p;
     }
-
-    &:first-child {
-        margin-top: -30px;
-    }
 `;
 
 const Quantity = styled.span`
