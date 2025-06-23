@@ -20,7 +20,6 @@ const ItemImage = styled.img`
     grid-row: 1 / 2;
     transition: border-color 0.1s ease-in;
     height: 207px;
-    aspect-ratio: 1;
     object-fit: cover;
 
     @media screen and (min-width: 1024px) {

@@ -27,6 +27,10 @@ const Section = styled.section`
         padding-left: 7.8vw;
         padding-right: 7.8vw;
     }
+
+    @media screen and (min-width: 1920px) {
+        max-width: 1920px;
+    }
 `;
 
 const Heading = styled.h1`
@@ -40,9 +44,8 @@ const ItemsList = styled.ul`
     display: grid;
     align-items: start;
     gap: 20px;
-    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr;
     margin-top: 0;
-    max-width: 1000px;
 
     @media screen and (min-width: 600px) {
         grid-template-columns: repeat(2, 1fr);
@@ -50,6 +53,10 @@ const ItemsList = styled.ul`
 
     @media screen and (min-width: 1440px) {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media screen and (min-width: 1920px) {
+        grid-template-columns: repeat(4, 1fr);
     }
 `;
 
