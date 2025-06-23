@@ -126,7 +126,6 @@ export default function Item({
     onQuantityChange,
     quantity = 0,
 }) {
-    const sourceSet = `${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`;
     price = convertToUSD(price);
 
     /**
@@ -150,7 +149,7 @@ export default function Item({
     return (
         <ItemComponent>
             <ItemImage
-                srcSet={sourceSet}
+                srcSet={`${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`}
                 sizes="(max-width: 600px) 654px, (max-width: 1024px) 427px, 502px"
                 src={imageObject.desktop}
                 aria-hidden

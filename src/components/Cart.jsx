@@ -100,12 +100,12 @@ const ConfirmOrderButton = styled.button`
 
 /**
  * Panel displaying total items in cart and button to confirm order
- * @param {string} className        Prop to allow styled-components to style
- *                                  Cart outside of this component
- * @param {object} cartItems        All items in app
- * @param {number} totalQuantity    Total quantity of all items
- * @param {function} onItemRemoval  Passes item removal function
- * @param {function} onOpenConfirmation
+ * @param {string} className            Prop to allow styled-components to style
+ *                                      Cart outside of this component
+ * @param {object} cartItems            All items in app
+ * @param {number} totalQuantity        Total quantity of all items
+ * @param {function} onItemRemoval      Passes item removal function
+ * @param {function} onOpenConfirmation Function to open confirmation window
  * @returns Div element displaying items, cart total, and confirm order button
  */
 export default function Cart({
@@ -136,7 +136,7 @@ export default function Cart({
     }
 
     /**
-     * Calculates the total cost of all items in the cart
+     * Calculate the total cost of all items in the cart
      * @returns Total cost
      */
     function totalCost() {
@@ -150,6 +150,9 @@ export default function Cart({
         return cost;
     }
 
+    /**
+     * Open the confirmation panel
+     */
     function openConfirmation() {
         onOpenConfirmation();
     }

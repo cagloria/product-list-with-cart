@@ -73,8 +73,10 @@ const RemoveItemButton = styled(IconButton)`
 `;
 
 /**
- * Individual item displayed in a cart
- * @param {object} itemObj  JSON item object
+ * Individual item displayed in the cart panel
+ * @param {object} itemObj          JSON item object
+ * @param {function} onRemovalAll   Function to remove all of this item from
+ *                                  cart
  * @returns List item showing item name, quantity, individual price, total
  * price, and button to remove all of this item from cart
  */

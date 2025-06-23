@@ -92,7 +92,8 @@ export default function App() {
     function handleItemQuantityChange(itemName, difference) {
         let newItems = cart.items.map((item) => {
             if (item.name === itemName) {
-                // Change item quantity by difference
+                // Change item quantity by difference if quantity is valid
+                // number, else use the difference as its starting quantity
                 return {
                     ...item,
                     quantity: isNaN(item.quantity)

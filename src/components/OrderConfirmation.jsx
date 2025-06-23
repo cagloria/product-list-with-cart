@@ -33,8 +33,10 @@ const Panel = styled.div`
 
 const BackgroundShade = styled.div`
     position: fixed;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background-color: ${colors.rose900};
     opacity: 0.6;
 `;
@@ -180,6 +182,9 @@ export default function OrderConfirmation({ cartItems, onStartNewOrder }) {
         return cost;
     }
 
+    /**
+     * Removes all items from cart and starts new order
+     */
     function startNewOrder() {
         onStartNewOrder();
     }
