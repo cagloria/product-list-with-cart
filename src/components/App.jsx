@@ -65,19 +65,11 @@ const CartPanel = styled(Cart)`
 // TODO: Adjust to remove entire data from cart on loading app, allowing each
 // item to be added in the order that which the user adds it, not in the order
 // that data.json dictates
-// FIXME: Optimize replacing array of objects
 export default function App() {
     const [cart, setCart] = useState({ cartQuantity: 0, items: dataJSON });
     const [confirmationIsOpen, setConfirmationIsOpen] = useState(false);
 
     const listItems = cart.items.map((item) => {
-        const itemsArr = cart.items;
-
-        const index = itemsArr.findIndex(
-            (element) => element.name === item.name
-        );
-        const itemObj = itemsArr[index];
-
         return (
             <Item
                 key={item.name}
@@ -86,30 +78,36 @@ export default function App() {
                 price={item.price}
                 imageObject={item.image}
                 onQuantityChange={handleItemQuantityChange}
-                quantity={itemObj.quantity ?? 0}
+                quantity={isNaN(item.quantity) ? 0 : item.quantity}
             />
         );
     });
 
     /**
      * Changes total quantity of this item in the cart
-     * @param {string} itemName             Name of item
-     * @param {number} quantityDifference   Difference to change quantity of
-     *                                      this item by
+     * @param {string} itemName     Name of item
+     * @param {number} difference   Difference to change quantity of this item
+     *                              by
      */
-    function handleItemQuantityChange(itemName, quantityDifference) {
-        let newCartArr = cart.items;
-        let index = newCartArr.findIndex((item) => item.name === itemName);
-
-        if (newCartArr[index].quantity) {
-            newCartArr[index].quantity += quantityDifference;
-        } else {
-            newCartArr[index].quantity = 1;
-        }
+    function handleItemQuantityChange(itemName, difference) {
+        let newItems = cart.items.map((item) => {
+            if (item.name === itemName) {
+                // Change item quantity by difference
+                return {
+                    ...item,
+                    quantity: isNaN(item.quantity)
+                        ? difference
+                        : item.quantity + difference,
+                };
+            } else {
+                // No changes
+                return item;
+            }
+        });
 
         setCart({
-            cartQuantity: (cart.cartQuantity += quantityDifference),
-            items: newCartArr,
+            cartQuantity: cart.cartQuantity + difference,
+            items: newItems,
         });
     }
 
@@ -118,24 +116,34 @@ export default function App() {
      * @param {string} itemName Name of item
      */
     function handleItemRemoval(itemName) {
-        let newCartArr = cart.items;
-        let index = newCartArr.findIndex((item) => item.name === itemName);
-        const originalCartQuantity = newCartArr[index].quantity;
-
-        if (newCartArr[index].quantity) {
-            newCartArr[index].quantity = 0;
-        }
+        let itemOriginalQuantity = 0;
+        let newItems = cart.items.map((item) => {
+            if (item.name === itemName) {
+                // Set item quantity to 0
+                itemOriginalQuantity = item.quantity;
+                return { ...item, quantity: 0 };
+            } else {
+                // No changes
+                return item;
+            }
+        });
 
         setCart({
-            cartQuantity: cart.cartQuantity - originalCartQuantity,
-            items: newCartArr,
+            cartQuantity: cart.cartQuantity - itemOriginalQuantity,
+            items: newItems,
         });
     }
 
+    /**
+     * Opens confirmation panel
+     */
     function handleOpenConfirmation() {
         setConfirmationIsOpen(true);
     }
 
+    /**
+     * Resets cart to 0 quantity and sets all items to 0 quantity
+     */
     function handleStartNewOrder() {
         setConfirmationIsOpen(false);
 
