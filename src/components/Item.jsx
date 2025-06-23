@@ -19,6 +19,13 @@ const ItemImage = styled.img`
     width: 100%;
     grid-row: 1 / 2;
     transition: border-color 0.1s ease-in;
+    height: 207px;
+    aspect-ratio: 1;
+    object-fit: cover;
+
+    @media screen and (min-width: 1024px) {
+        height: 243px;
+    }
 `;
 
 const CategoryName = styled.p`
@@ -142,11 +149,10 @@ export default function Item({
 
     return (
         <ItemComponent>
-            {/* FIXME: Fix responsive image source set */}
             <ItemImage
                 srcSet={sourceSet}
-                sizes="(min-width: 600px) 427px, (min-width: 1024px) 502px, 654px"
-                src={imageObject.mobile}
+                sizes="(max-width: 600px) 654px, (max-width: 1024px) 427px, 502px"
+                src={imageObject.desktop}
                 aria-hidden
                 alt=""
                 $quantity={quantity}
