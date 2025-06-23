@@ -44,20 +44,9 @@ const ItemsList = styled.ul`
     display: grid;
     align-items: start;
     gap: 20px;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    width: 100%;
     margin-top: 0;
-
-    @media screen and (min-width: 600px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media screen and (min-width: 1440px) {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media screen and (min-width: 1920px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
 `;
 
 const CartPanel = styled(Cart)`
