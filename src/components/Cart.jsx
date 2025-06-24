@@ -46,7 +46,6 @@ const ItemsList = styled.ul`
     @media screen and (min-width: 1024px) {
         overflow-x: hidden;
         overflow-y: scroll;
-        width: calc(100% + 10px);
 
         li {
             width: calc(100% - 10px);

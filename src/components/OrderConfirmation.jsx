@@ -68,7 +68,12 @@ const ItemList = styled.ul`
     flex-direction: column;
     row-gap: 10px;
     max-height: 270px;
+    overflow-x: hidden;
     overflow-y: scroll;
+
+    li {
+        width: calc(100% - 10px);
+    }
 `;
 
 const Item = styled.li`
