@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { GlobalStyle } from "../styling/Theme";
 import dataJSON from "../data/data.json";
@@ -62,8 +62,21 @@ const CartPanel = styled(Cart)`
 // item to be added in the order that which the user adds it, not in the order
 // that data.json dictates
 export default function App() {
-    const [cart, setCart] = useState({ cartQuantity: 0, items: dataJSON });
+    const [cart, setCart] = useState(() => {
+        return (
+            // Check for cart from local storage; if none, set to default empty
+            // cart
+            JSON.parse(localStorage.getItem("cart")) || {
+                cartQuantity: 0,
+                items: dataJSON,
+            }
+        );
+    });
     const [confirmationIsOpen, setConfirmationIsOpen] = useState(false);
+
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
 
     const listItems = cart.items.map((item) => {
         return (

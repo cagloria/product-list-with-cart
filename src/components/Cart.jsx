@@ -5,7 +5,6 @@ import { convertToUSD } from "../utility/utility";
 import imgEmptyCart from "../assets/icons/illustration-empty-cart.svg";
 import iconCarbonNeutral from "../assets/icons/icon-carbon-neutral.svg";
 
-// TODO: Add cart to local storage
 const Panel = styled.div`
     background-color: ${colors.rose50};
     box-shadow: ${colors.rose100} 0px 8px 40px 8px;
