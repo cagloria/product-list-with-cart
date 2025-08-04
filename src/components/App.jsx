@@ -59,6 +59,7 @@ const CartPanel = styled(Cart)`
 `;
 
 export default function App() {
+    // TODO: Add local storage back when done with testing
     // const [cart, setCart] = useState(() => {
     //     return JSON.parse(localStorage.getItem("cart")) || [];
     // });
@@ -128,7 +129,7 @@ export default function App() {
 
     /**
      * Remove all of an individual item from the cart
-     * @param {string} itemToRemove Item object
+     * @param {object} itemToRemove Item object to remove
      */
     function handleItemRemoval(itemToRemove) {
         setCart(cart.filter((item) => item.name !== itemToRemove.name));
@@ -142,24 +143,18 @@ export default function App() {
     }
 
     /**
-     * Resets cart to 0 quantity and sets all items to 0 quantity
+     * Filters out all items that have any name value and sets it to the cart,
+     * thus removing all items
      */
     function handleStartNewOrder() {
         setConfirmationIsOpen(false);
-
-        let newItems = cart.map((item) => {
-            if (item.quantity > 0) {
-                // Create new item with quantity 0 and replace
-                return { ...item, quantity: 0 };
-            } else {
-                // No changes
-                return item;
-            }
-        });
-
-        setCart({ cartQuantity: 0, items: newItems });
+        setCart(cart.filter((item) => item.name === ""));
     }
 
+    /**
+     * Returns the total quantity of all items in cart
+     * @returns Quantity of all items in cart
+     */
     function getTotalQuantity() {
         let quantity = 0;
         cart.forEach((item) => {
