@@ -114,15 +114,13 @@ export default function Cart({
     onOpenConfirmation,
 }) {
     const items = cartItems.map((item) => {
-        if (item.quantity > 0) {
-            return (
-                <CartItem
-                    itemObj={item}
-                    key={item.name}
-                    onRemovalAll={handleItemRemoval}
-                />
-            );
-        }
+        return (
+            <CartItem
+                itemObj={item}
+                key={item.name}
+                onRemovalAll={handleItemRemoval}
+            />
+        );
     });
 
     /**

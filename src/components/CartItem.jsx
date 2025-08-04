@@ -88,7 +88,7 @@ export default function CartItem({ itemObj, onRemovalAll }) {
      * Remove all of this item from the cart
      */
     function removeAll() {
-        onRemovalAll(itemObj.name);
+        onRemovalAll(itemObj);
     }
 
     return (

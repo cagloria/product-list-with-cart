@@ -108,31 +108,19 @@ const QuantityChangeButton = styled(IconButton)`
 
 /**
  * Individual item that appears within the shopping page
- * @param {string} name                 Name of item
- * @param {string} category             Category of item
- * @param {number} price                Price of item
- * @param {object} imageObject          Object to hold image URLs
+ * @param {string} item                 Item object
  * @param {function} onQuantityChange   Function to handle item quantity change
  * @param {number} quantity             Quantity of item
  * @returns List item displaying item image, details, and ability to change
  * quantity
  */
-export default function Item({
-    name,
-    category,
-    price,
-    imageObject,
-    onQuantityChange,
-    quantity = 0,
-}) {
-    price = convertToUSD(price);
-
+export default function Item({ item, onQuantityChange, quantity = 0 }) {
     /**
      * Adds one of this item to cart. Prevents function if quantity is over 99.
      */
     function addItem() {
         if (quantity < 100) {
-            onQuantityChange(name, 1);
+            onQuantityChange(item, 1);
         }
     }
 
@@ -141,23 +129,23 @@ export default function Item({
      */
     function removeItem() {
         if (quantity > 0) {
-            onQuantityChange(name, -1);
+            onQuantityChange(item, -1);
         }
     }
 
     return (
         <ItemComponent>
             <ItemImage
-                srcSet={`${imageObject.mobile} 654w, ${imageObject.tablet} 427w, ${imageObject.desktop} 502w`}
+                srcSet={`${item.image.mobile} 654w, ${item.image.tablet} 427w, ${item.image.desktop} 502w`}
                 sizes="(max-width: 600px) 654px, (max-width: 1024px) 427px, 502px"
-                src={imageObject.desktop}
+                src={item.image.desktop}
                 aria-hidden
                 alt=""
                 $quantity={quantity}
             />
-            <CategoryName>{category}</CategoryName>
-            <ItemName>{name}</ItemName>
-            <Price>{price}</Price>
+            <CategoryName>{item.category}</CategoryName>
+            <ItemName>{item.name}</ItemName>
+            <Price>{convertToUSD(item.price)}</Price>
             <CartQuantityContainer>
                 {quantity < 1 ? (
                     <AddToCartButton onClick={addItem}>

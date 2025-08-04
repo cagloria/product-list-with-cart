@@ -58,90 +58,80 @@ const CartPanel = styled(Cart)`
     }
 `;
 
-// TODO: Adjust to remove entire data from cart on loading app, allowing each
-// item to be added in the order that which the user adds it, not in the order
-// that data.json dictates
 export default function App() {
-    const [cart, setCart] = useState(() => {
-        return (
-            // Check for cart from local storage; if none, set to default empty
-            // cart
-            JSON.parse(localStorage.getItem("cart")) || {
-                cartQuantity: 0,
-                items: dataJSON,
-            }
-        );
-    });
+    // const [cart, setCart] = useState(() => {
+    //     return JSON.parse(localStorage.getItem("cart")) || [];
+    // });
+    const [cart, setCart] = useState([]);
     const [confirmationIsOpen, setConfirmationIsOpen] = useState(false);
 
     useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
+        // localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
 
-    const listItems = cart.items.map((item) => {
+    const catalogueItems = dataJSON.map((item) => {
         return (
             <Item
                 key={item.name}
-                name={item.name}
-                category={item.category}
-                price={item.price}
-                imageObject={item.image}
+                item={item}
                 onQuantityChange={handleItemQuantityChange}
-                quantity={isNaN(item.quantity) ? 0 : item.quantity}
+                quantity={getItemQuantityFromCart(item.name) || 0}
             />
         );
     });
 
+    function getItemQuantityFromCart(itemName) {
+        const index = cart.findIndex((item) => item.name === itemName);
+
+        if (index > -1) {
+            return cart[index].quantity;
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * Changes total quantity of this item in the cart
-     * @param {string} itemName     Name of item
+     * @param {string} newItem      Item object
      * @param {number} difference   Difference to change quantity of this item
      *                              by
      */
-    function handleItemQuantityChange(itemName, difference) {
-        let newItems = cart.items.map((item) => {
-            if (item.name === itemName) {
-                // Change item quantity by difference if quantity is valid
-                // number, else use the difference as its starting quantity
-                return {
-                    ...item,
-                    quantity: isNaN(item.quantity)
-                        ? difference
-                        : item.quantity + difference,
-                };
-            } else {
-                // No changes
-                return item;
-            }
-        });
+    function handleItemQuantityChange(newItem, difference) {
+        const quantInCart = getItemQuantityFromCart(newItem.name);
+        // FIXME: Remove item from state when quantity is 0
 
-        setCart({
-            cartQuantity: cart.cartQuantity + difference,
-            items: newItems,
-        });
+        // If the item is not in the cart
+        if (quantInCart <= 0) {
+            newItem.quantity = 1;
+            setCart([...cart, newItem]);
+        }
+        // The item is in the cart and so the quantity needs to be updated
+        else {
+            const itemIndex = cart.findIndex(
+                (item) => item.name === newItem.name
+            );
+
+            const newCart = cart.map((mapItem, mapIndex) => {
+                // Change the quantity of this item
+                if (mapIndex === itemIndex) {
+                    newItem.quantity += difference;
+                    return newItem;
+                }
+                // The other items don't change
+                else {
+                    return mapItem;
+                }
+            });
+            setCart(newCart);
+        }
     }
 
     /**
      * Remove all of an individual item from the cart
-     * @param {string} itemName Name of item
+     * @param {string} itemToRemove Item object
      */
-    function handleItemRemoval(itemName) {
-        let itemOriginalQuantity = 0;
-        let newItems = cart.items.map((item) => {
-            if (item.name === itemName) {
-                // Set item quantity to 0
-                itemOriginalQuantity = item.quantity;
-                return { ...item, quantity: 0 };
-            } else {
-                // No changes
-                return item;
-            }
-        });
-
-        setCart({
-            cartQuantity: cart.cartQuantity - itemOriginalQuantity,
-            items: newItems,
-        });
+    function handleItemRemoval(itemToRemove) {
+        setCart(cart.filter((item) => item.name !== itemToRemove.name));
     }
 
     /**
@@ -157,7 +147,7 @@ export default function App() {
     function handleStartNewOrder() {
         setConfirmationIsOpen(false);
 
-        let newItems = cart.items.map((item) => {
+        let newItems = cart.map((item) => {
             if (item.quantity > 0) {
                 // Create new item with quantity 0 and replace
                 return { ...item, quantity: 0 };
@@ -170,22 +160,32 @@ export default function App() {
         setCart({ cartQuantity: 0, items: newItems });
     }
 
+    function getTotalQuantity() {
+        let quantity = 0;
+        cart.forEach((item) => {
+            quantity += item.quantity;
+        });
+        return quantity;
+    }
+
     return (
         <>
             <GlobalStyle />
             <main>
                 <Section>
                     <Heading>Desserts</Heading>
-                    <ItemsList>{listItems ?? "Loading items..."}</ItemsList>
+                    <ItemsList>
+                        {catalogueItems ?? "Loading items..."}
+                    </ItemsList>
                     <CartPanel
-                        cartItems={cart.items}
-                        totalQuantity={cart.cartQuantity}
+                        cartItems={cart}
+                        totalQuantity={getTotalQuantity()}
                         onItemRemoval={handleItemRemoval}
                         onOpenConfirmation={handleOpenConfirmation}
                     />
                     {confirmationIsOpen ? (
                         <OrderConfirmation
-                            cartItems={cart.items}
+                            cartItems={cart}
                             onStartNewOrder={handleStartNewOrder}
                             isOpen={confirmationIsOpen}
                         />
