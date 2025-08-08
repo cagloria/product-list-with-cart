@@ -109,18 +109,20 @@ const QuantityChangeButton = styled(IconButton)`
 /**
  * Individual item that appears within the shopping page
  * @param {string} item                 Item object
- * @param {function} onQuantityChange   Function to handle item quantity change
+ * @param {function} onIncrement        Function to increment quantity
+ * @param {function} onDecrement        Function to decrement quantity
  * @param {number} quantity             Quantity of item
  * @returns List item displaying item image, details, and ability to change
  * quantity
  */
-export default function Item({ item, onQuantityChange, quantity = 0 }) {
+export default function Item({ item, onDecrement, onIncrement, quantity = 0 }) {
     /**
      * Adds one of this item to cart. Prevents function if quantity is over 99.
      */
     function addItem() {
+        // TODO: Add alert to prevent a quantity of over 99
         if (quantity < 100) {
-            onQuantityChange(item, 1);
+            onIncrement(item);
         }
     }
 
@@ -128,9 +130,7 @@ export default function Item({ item, onQuantityChange, quantity = 0 }) {
      * Removes one of this item from the cart.
      */
     function removeItem() {
-        if (quantity > 0) {
-            onQuantityChange(item, -1);
-        }
+        onDecrement(item);
     }
 
     return (

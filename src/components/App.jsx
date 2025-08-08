@@ -75,13 +75,14 @@ export default function App() {
             <Item
                 key={item.name}
                 item={item}
-                onQuantityChange={handleItemQuantityChange}
-                quantity={getItemQuantityFromCart(item.name) || 0}
+                onIncrement={handleItemIncrement}
+                onDecrement={handleItemDecrement}
+                quantity={getItemQuantityInCart(item.name) || 0}
             />
         );
     });
 
-    function getItemQuantityFromCart(itemName) {
+    function getItemQuantityInCart(itemName) {
         const index = cart.findIndex((item) => item.name === itemName);
 
         if (index > -1) {
@@ -91,40 +92,56 @@ export default function App() {
         }
     }
 
-    /**
-     * Changes total quantity of this item in the cart
-     * @param {string} newItem      Item object
-     * @param {number} difference   Difference to change quantity of this item
-     *                              by
-     */
-    function handleItemQuantityChange(newItem, difference) {
-        const quantInCart = getItemQuantityFromCart(newItem.name);
-        // FIXME: Remove item from state when quantity is 0
+    function handleItemIncrement(changedItem) {
+        const index = cart.findIndex((item) => item.name === changedItem.name);
 
-        // If the item is not in the cart
-        if (quantInCart <= 0) {
-            newItem.quantity = 1;
-            setCart([...cart, newItem]);
+        // If the item is not in the cart, add it
+        if (index === -1) {
+            changedItem.quantity = 1;
+            setCart([...cart, changedItem]);
         }
-        // The item is in the cart and so the quantity needs to be updated
+        // If the item is in the cart, increment its quantity
         else {
-            const itemIndex = cart.findIndex(
-                (item) => item.name === newItem.name
-            );
-
-            const newCart = cart.map((mapItem, mapIndex) => {
-                // Change the quantity of this item
-                if (mapIndex === itemIndex) {
-                    newItem.quantity += difference;
-                    return newItem;
+            const newCart = cart.map((newCartItem, newCartIndex) => {
+                // Change the quantity of only this item
+                if (newCartIndex === index) {
+                    changedItem.quantity++;
+                    return changedItem;
                 }
                 // The other items don't change
                 else {
-                    return mapItem;
+                    return newCartItem;
                 }
             });
+
             setCart(newCart);
         }
+    }
+
+    function handleItemDecrement(changedItem) {
+        // FIXME: Remove item from state when quantity is reduced to 0 via
+        // decrement button
+        const itemIndex = cart.findIndex(
+            (item) => item.name === changedItem.name
+        );
+
+        const newCart = cart.map((mapItem, mapIndex) => {
+            // Change the quantity of this item
+            if (mapIndex === itemIndex) {
+                changedItem.quantity--;
+                if (changedItem.quantity < 1) {
+                    handleItemRemoval(changedItem);
+                } else {
+                    return changedItem;
+                }
+            }
+            // The other items don't change
+            else {
+                return mapItem;
+            }
+        });
+
+        setCart(newCart);
     }
 
     /**
