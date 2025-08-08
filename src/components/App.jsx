@@ -59,15 +59,14 @@ const CartPanel = styled(Cart)`
 `;
 
 export default function App() {
-    // TODO: Add local storage back when done with testing
-    // const [cart, setCart] = useState(() => {
-    //     return JSON.parse(localStorage.getItem("cart")) || [];
-    // });
-    const [cart, setCart] = useState([]);
+    // FIXME: Changing an item after refreshing sets its quantity to null
+    const [cart, setCart] = useState(() => {
+        return JSON.parse(localStorage.getItem("cart")) || [];
+    });
     const [confirmationIsOpen, setConfirmationIsOpen] = useState(false);
 
     useEffect(() => {
-        // localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
 
     const catalogueItems = dataJSON.map((item) => {
@@ -82,6 +81,11 @@ export default function App() {
         );
     });
 
+    /**
+     * Get the quantity of an item from the cart.
+     * @param {string} itemName Item name
+     * @returns Quantity of item in cart
+     */
     function getItemQuantityInCart(itemName) {
         const index = cart.findIndex((item) => item.name === itemName);
 
@@ -92,6 +96,11 @@ export default function App() {
         }
     }
 
+    /**
+     * Increment the quantity of an item in the cart. Adds the item if it does
+     * not exist in the cart.
+     * @param {object} changedItem  Item to increment the quantity of
+     */
     function handleItemIncrement(changedItem) {
         const index = cart.findIndex((item) => item.name === changedItem.name);
 
@@ -102,15 +111,15 @@ export default function App() {
         }
         // If the item is in the cart, increment its quantity
         else {
-            const newCart = cart.map((newCartItem, newCartIndex) => {
+            const newCart = cart.map((mapItem, mapIndex) => {
                 // Change the quantity of only this item
-                if (newCartIndex === index) {
+                if (mapIndex === index) {
                     changedItem.quantity++;
                     return changedItem;
                 }
                 // The other items don't change
                 else {
-                    return newCartItem;
+                    return mapItem;
                 }
             });
 
@@ -118,30 +127,33 @@ export default function App() {
         }
     }
 
+    /**
+     * Decrement the quantity of an item in the cart.
+     * @param {object} changedItem  Item to decrement the quantity of
+     */
     function handleItemDecrement(changedItem) {
-        // FIXME: Remove item from state when quantity is reduced to 0 via
-        // decrement button
-        const itemIndex = cart.findIndex(
-            (item) => item.name === changedItem.name
-        );
+        const index = cart.findIndex((item) => item.name === changedItem.name);
 
-        const newCart = cart.map((mapItem, mapIndex) => {
-            // Change the quantity of this item
-            if (mapIndex === itemIndex) {
-                changedItem.quantity--;
-                if (changedItem.quantity < 1) {
-                    handleItemRemoval(changedItem);
-                } else {
+        // If quantity is 1, remove entire item
+        if (cart[index].quantity === 1) {
+            handleItemRemoval(changedItem);
+        }
+        // If quantity is > 1, decrement its quantity
+        else {
+            const newCart = cart.map((mapItem, mapIndex) => {
+                // Change the quantity of this item
+                if (mapIndex === index) {
+                    changedItem.quantity--;
                     return changedItem;
                 }
-            }
-            // The other items don't change
-            else {
-                return mapItem;
-            }
-        });
+                // The other items don't change
+                else {
+                    return mapItem;
+                }
+            });
 
-        setCart(newCart);
+            setCart(newCart);
+        }
     }
 
     /**
