@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Tooltip } from "react-tooltip";
 import { colors } from "../styling/Variables";
 import { convertToUSD } from "../utility/utility";
 import IconButton from "../ui/IconButton";
@@ -95,7 +96,7 @@ const QuantityChangeButton = styled(IconButton)`
         border-radius: 50%;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
         svg {
             background-color: ${colors.rose100};
 
@@ -103,6 +104,10 @@ const QuantityChangeButton = styled(IconButton)`
                 fill: ${colors.primary};
             }
         }
+    }
+
+    &:disabled {
+        opacity: 0.5;
     }
 `;
 
@@ -120,8 +125,7 @@ export default function Item({ item, onDecrement, onIncrement, quantity = 0 }) {
      * Adds one of this item to cart. Prevents function if quantity is over 99.
      */
     function addItem() {
-        // TODO: Add alert to prevent a quantity of over 99
-        if (quantity < 100) {
+        if (quantity < 99) {
             onIncrement(item);
         }
     }
@@ -131,6 +135,54 @@ export default function Item({ item, onDecrement, onIncrement, quantity = 0 }) {
      */
     function removeItem() {
         onDecrement(item);
+    }
+
+    function QuantityControl() {
+        if (quantity < 1) {
+            return (
+                <AddToCartButton onClick={addItem}>
+                    <CartIcon aria-hidden />
+                    Add to Cart
+                </AddToCartButton>
+            );
+        } else if (quantity >= 1 && quantity < 99) {
+            return (
+                <>
+                    <QuantityChangeButton
+                        IconComponent={DecrementIconSVG}
+                        label="Remove 1"
+                        calledFunction={removeItem}
+                    />
+                    <span>{quantity}</span>
+                    <QuantityChangeButton
+                        IconComponent={IncrementIconSVG}
+                        label="Add 1"
+                        calledFunction={addItem}
+                    />
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <QuantityChangeButton
+                        IconComponent={DecrementIconSVG}
+                        label="Remove 1"
+                        calledFunction={removeItem}
+                    />
+                    <span>{quantity}</span>
+                    <Tooltip anchorSelect=".prevent-increment" place="top">
+                        Maximum quantity is 99
+                    </Tooltip>
+                    <QuantityChangeButton
+                        isDisabled={true}
+                        className="prevent-increment"
+                        IconComponent={IncrementIconSVG}
+                        label="Add 1"
+                        calledFunction={addItem}
+                    />
+                </>
+            );
+        }
     }
 
     return (
@@ -147,26 +199,7 @@ export default function Item({ item, onDecrement, onIncrement, quantity = 0 }) {
             <ItemName>{item.name}</ItemName>
             <Price>{convertToUSD(item.price)}</Price>
             <CartQuantityContainer>
-                {quantity < 1 ? (
-                    <AddToCartButton onClick={addItem}>
-                        <CartIcon aria-hidden />
-                        Add to Cart
-                    </AddToCartButton>
-                ) : (
-                    <>
-                        <QuantityChangeButton
-                            IconComponent={DecrementIconSVG}
-                            label="Remove 1"
-                            calledFunction={removeItem}
-                        />
-                        <span>{quantity}</span>
-                        <QuantityChangeButton
-                            IconComponent={IncrementIconSVG}
-                            label="Add 1"
-                            calledFunction={addItem}
-                        />
-                    </>
-                )}
+                <QuantityControl />
             </CartQuantityContainer>
         </ItemComponent>
     );

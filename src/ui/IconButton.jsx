@@ -41,12 +41,14 @@ export default function IconButton({
     IconComponent,
     label,
     calledFunction,
+    isDisabled = false,
 }) {
     return (
         <Button
             className={className}
             aria-label={label}
             onClick={calledFunction}
+            disabled={isDisabled}
         >
             <IconComponent aria-hidden />
         </Button>
