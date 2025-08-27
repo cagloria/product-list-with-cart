@@ -95,16 +95,16 @@ export default function CartItem({ itemObj, onRemovalAll }) {
         <Item>
             <h4>{itemObj.name}</h4>
             <p>
-                <Quantity aria-label={"Quantity: " + itemObj.quantity}>
+                <Quantity aria-label={`Quantity: ${itemObj.quantity}`}>
                     {itemObj.quantity}x
                 </Quantity>
 
-                <TotalItemCost aria-label={"Item total: " + totalItemCost}>
+                <TotalItemCost aria-label={`Item total: ${totalItemCost}`}>
                     @ {totalItemCost}
                 </TotalItemCost>
 
                 <IndividualCost
-                    aria-label={"Individual cost: " + individualItemCost}
+                    aria-label={`Individual cost: ${individualItemCost}`}
                 >
                     {individualItemCost}
                 </IndividualCost>

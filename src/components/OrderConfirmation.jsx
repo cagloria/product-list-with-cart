@@ -160,11 +160,17 @@ export default function OrderConfirmation({ cartItems, onStartNewOrder }) {
                         <b>{item.name}</b>
                     </ItemName>
 
-                    <ItemQuantity>{item.quantity}x</ItemQuantity>
+                    <ItemQuantity aria-label={`Quantity: ${item.quantity}`}>
+                        {item.quantity}x
+                    </ItemQuantity>
 
-                    <ItemIndividualCost>@{individualCost}</ItemIndividualCost>
+                    <ItemIndividualCost
+                        aria-label={`Individual cost: ${individualCost}`}
+                    >
+                        @{individualCost}
+                    </ItemIndividualCost>
 
-                    <ItemTotalCost>
+                    <ItemTotalCost aria-label={`Item total: ${total}`}>
                         <b>{total}</b>
                     </ItemTotalCost>
                 </Item>

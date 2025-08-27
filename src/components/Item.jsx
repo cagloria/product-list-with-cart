@@ -139,7 +139,10 @@ export default function Item({ item, onDecrement, onIncrement, quantity = 0 }) {
     function QuantityControl() {
         if (quantity < 1) {
             return (
-                <AddToCartButton onClick={addItem}>
+                <AddToCartButton
+                    aria-label={`Add ${item.name} to Cart`}
+                    onClick={addItem}
+                >
                     <CartIcon aria-hidden />
                     Add to Cart
                 </AddToCartButton>
@@ -149,13 +152,13 @@ export default function Item({ item, onDecrement, onIncrement, quantity = 0 }) {
                 <>
                     <QuantityChangeButton
                         IconComponent={DecrementIconSVG}
-                        label="Remove 1"
+                        label={`Remove 1 ${item.name}`}
                         calledFunction={removeItem}
                     />
-                    <span>{quantity}</span>
+                    <span aria-label={`Quantity: ${quantity}`}>{quantity}</span>
                     <QuantityChangeButton
                         IconComponent={IncrementIconSVG}
-                        label="Add 1"
+                        label={`Add 1 ${item.name}`}
                         calledFunction={addItem}
                     />
                 </>
