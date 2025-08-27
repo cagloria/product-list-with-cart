@@ -48,7 +48,6 @@ const Price = styled.p`
     grid-row: 5 / 6;
 `;
 
-// TODO: Animation to distinguish Add to Cart and increment/decrement
 const CartQuantityContainer = styled.div`
     grid-row: 2 / 3;
     position: relative;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { GlobalStyle } from "../styling/Theme";
-import dataJSON from "../data/data.json";
+import dataJSON from "../../public/data.json";
 import Item from "./Item";
 import Cart from "./Cart";
 import OrderConfirmation from "./OrderConfirmation";
