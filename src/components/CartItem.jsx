@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { convertToUSD } from "../utility/utility";
+import { convertToUSD } from "../utility/Format.jsx";
 import { colors } from "../styling/Variables";
 import IconButton from "../ui/IconButton.jsx";
 import RemoveItemIconSVG from "../assets/icons/icon-remove-item.svg?react";

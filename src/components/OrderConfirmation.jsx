@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../styling/Variables";
-import { convertToUSD } from "../utility/utility";
+import { convertToUSD } from "../utility/Format";
 import CheckIcon from "../assets/icons/icon-order-confirmed.svg?react";
 
 const Panel = styled.div`

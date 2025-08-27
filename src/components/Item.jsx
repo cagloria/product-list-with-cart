@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Tooltip } from "react-tooltip";
 import { colors } from "../styling/Variables";
-import { convertToUSD } from "../utility/utility";
+import { convertToUSD } from "../utility/Format";
 import IconButton from "../ui/IconButton";
 import CartIcon from "../assets/icons/icon-add-to-cart.svg?react";
 import DecrementIconSVG from "../assets/icons/icon-decrement-quantity.svg?react";

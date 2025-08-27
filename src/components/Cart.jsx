@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CartItem from "./CartItem";
 import { colors } from "../styling/Variables";
-import { convertToUSD } from "../utility/utility";
+import { convertToUSD } from "../utility/Format";
 import imgEmptyCart from "../assets/icons/illustration-empty-cart.svg";
 import iconCarbonNeutral from "../assets/icons/icon-carbon-neutral.svg";
 
