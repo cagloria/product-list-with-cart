@@ -4,17 +4,20 @@
 
 This is a solution to the [Product list with cart challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/product-list-with-cart-5MmqLVAp_d). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-<p align="center">⚠️ This single-page React app is currently a work in progress. ⚠️</p>
-
 ## Table of contents
 
 -   [Overview](#overview)
     -   [The challenge](#the-challenge)
+    -   [Links](#links)
 -   [My process](#my-process)
     -   [Built with](#built-with)
 -   [Author](#author)
 
 ## Overview
+
+### Links
+
+-   [Live Site URL](https://cagloria.github.io/product-list-with-cart/)
 
 ### The challenge
 
@@ -39,6 +42,7 @@ Users should be able to:
 -   [React](https://react.dev/) - JS library
 -   [Styled Components](https://styled-components.com/) - For styles
 -   [vite-plugin-svgr](https://www.npmjs.com/package/vite-plugin-svgr) - For turning SVGs into React components
+-   [gh-pages](https://www.npmjs.com/package/gh-pages) - For publishing to GitHub Pages
 
 ## Author
 
