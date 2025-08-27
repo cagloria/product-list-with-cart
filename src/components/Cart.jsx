@@ -2,14 +2,14 @@ import styled from "styled-components";
 import CartItem from "./CartItem";
 import { colors } from "../styling/Variables";
 import { convertToUSD } from "../utility/Format";
-import imgEmptyCart from "../assets/icons/illustration-empty-cart.svg";
-import iconCarbonNeutral from "../assets/icons/icon-carbon-neutral.svg";
+import EmptyCartImage from "../assets/icons/illustration-empty-cart.svg?react";
+import CarbonNeutralIcon from "../assets/icons/icon-carbon-neutral.svg?react";
 
 const Panel = styled.div`
     background-color: ${colors.rose50};
     box-shadow: ${colors.rose100} 0px 8px 40px 8px;
     border-radius: 12px;
-    padding: 26px 24px;
+    padding: 26px clamp(14px, 6.4vw, 24px);
     display: flex;
     flex-direction: column;
 
@@ -25,14 +25,16 @@ const Heading = styled.h2`
     margin: 0 0 20px;
 `;
 
-const Image = styled.img`
-    align-self: center;
-`;
+const EmptyCartDescription = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-const Description = styled.p`
-    text-align: center;
-    margin-top: 15px;
-    font-size: 14px;
+    p {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+    }
 `;
 
 const ItemsList = styled.ul`
@@ -158,10 +160,10 @@ export default function Cart({
             <Heading>Your Cart ({totalQuantity})</Heading>
             {totalQuantity <= 0 ? (
                 <>
-                    <Image src={imgEmptyCart} alt="" aria-hidden />
-                    <Description>
-                        Your added items will appear here.
-                    </Description>
+                    <EmptyCartDescription>
+                        <EmptyCartImage alt="" aria-hidden />
+                        <p>Your added items will appear here.</p>
+                    </EmptyCartDescription>
                 </>
             ) : (
                 <>
@@ -171,9 +173,9 @@ export default function Cart({
                         <span>{totalCost()}</span>
                     </OrderTotal>
                     <DeliveryInfo>
-                        <img src={iconCarbonNeutral} alt="" aria-hidden />
+                        <CarbonNeutralIcon alt="" aria-hidden />
                         <p>
-                            This is a <b> carbon-neutral </b> delivery
+                            This is a <b>carbon-neutral</b> delivery
                         </p>
                     </DeliveryInfo>
                     <ConfirmOrderButton

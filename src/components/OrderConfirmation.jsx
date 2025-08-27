@@ -10,7 +10,7 @@ const Panel = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 32px;
-    padding: 40px 20px 24px;
+    padding: 40px clamp(14px, 5.3vw, 20px) 24px;
     position: fixed;
     bottom: 0;
     background-color: ${colors.rose50};
@@ -27,7 +27,7 @@ const Panel = styled.div`
         border-radius: 12px;
         width: 90vw;
         max-width: 590px;
-        padding: 20px 40px 24px;
+        padding: 20px clamp(30px, 2.8vw, 40px) 24px;
     }
 `;
 
@@ -57,8 +57,12 @@ const Message = styled.p`
 
 const Summary = styled.div`
     background-color: ${colors.rose75};
-    padding: 8px 28px 24px;
+    padding: 8px clamp(14px, 7.47vw, 28px) 24px;
     border-radius: 8px;
+
+    @media screen and (min-width: 600px) {
+        padding: 20px clamp(20px, 1.9vw, 40px) 24px;
+    }
 `;
 
 const ItemList = styled.ul`
@@ -155,7 +159,13 @@ export default function OrderConfirmation({ cartItems, onStartNewOrder }) {
         if (item.quantity > 0) {
             return (
                 <Item key={item.name}>
-                    <img src={item.image.thumbnail} alt="" aria-hidden />
+                    <img
+                        src={item.image.thumbnail}
+                        width="50"
+                        height="50"
+                        alt=""
+                        aria-hidden
+                    />
                     <ItemName>
                         <b>{item.name}</b>
                     </ItemName>
